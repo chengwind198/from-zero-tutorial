@@ -7,9 +7,21 @@
 1. [它解决什么问题](#1-它解决什么问题)
 2. [核心特性](#2-核心特性)
 3. [使用效果](#3-使用效果)
+   - [3.1 系列文章规划示例效果](#31-系列文章规划示例效果)
+   - [3.2 示例公众号文章显示效果](#32-示例公众号文章显示效果)
 4. [安装到各 AI 工具](#4-安装到各-ai-工具)
+   - [4.1 技能目录对照表](#41-技能目录对照表)
+   - [4.2 命令行安装示例](#42-命令行安装示例)
 5. [在 Codex / Claude Code 中使用示例](#5-在-codex-claude-code-中使用示例)
+   - [5.1 触发示例](#51-触发示例)
+   - [5.2 执行流程](#52-执行流程)
 6. [快速开始](#6-快速开始)
+   - [6.1 安装依赖](#61-安装依赖)
+   - [6.2 复制配置并填写凭据](#62-复制配置并填写凭据)
+   - [6.3 使用示例](#63-使用示例)
+     - [6.3.1 转 HTML](#631-转-html)
+     - [6.3.2 配图与内容校验](#632-配图与内容校验)
+     - [6.3.3 发布到公众号草稿箱](#633-发布到公众号草稿箱)
 7. [目录结构](#7-目录结构)
 8. [隐私与安全](#8-隐私与安全)
 9. [许可证](#9-许可证)
@@ -29,17 +41,23 @@
 
 ## 3. 使用效果
 
+### 3.1 系列文章规划示例效果
+
 ![系列文章规划示例效果](images/系列文章规划示例效果.png)
 
-**系列文章规划示例效果**：从零开始学系列的学习路径与课程规划。
+**说明**：从零开始学系列的学习路径与课程规划。
+
+### 3.2 示例公众号文章显示效果
 
 ![示例公众号文章显示效果](images/示例公众号文章显示效果.gif)
 
-**示例公众号文章显示效果**：微信公众号文章预览。
+**说明**：微信公众号文章预览。
 
 ## 4. 安装到各 AI 工具
 
 本项目是标准 Agent Skill：目录名 `from-zero-tutorial`、根目录带 `SKILL.md`，克隆或复制到对应工具的技能目录即可被识别（Windows 直接复制整个文件夹，Linux/macOS 也可用符号链接）。
+
+### 4.1 技能目录对照表
 
 | 工具 | 安装位置 / 方式 |
 | --- | --- |
@@ -51,6 +69,8 @@
 | 阿里千问办公（QwenWork） | 个人技能 `~/.qwenworkcn/skills/from-zero-tutorial`（Windows：`C:\Users\<你>\.qwenworkcn\skills\`），或在千问办公「技能 → 安装技能」上传 SKILL.md 及辅助文件 |
 | 百度搭子（DuMate） | 客户端「技能 → 安装技能」导入含 SKILL.md 的 zip 压缩包（支持拖入 URL）；技能广场可安装内置技能 |
 | 豆包工作 | 打开 [豆包工作](https://www.doubao.com/work) → 「技能·连接器·伙伴」安装，或自定义导入含 SKILL.md 的技能包（可将本仓库打包为 zip 导入） |
+
+### 4.2 命令行安装示例
 
 一条命令示例（Claude Code，Linux/macOS）：
 
@@ -65,39 +85,57 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 
 安装后无需额外配置，直接对 AI 说需求即可——技能描述包含「从零开始学 XXX / 零基础入门 / 从入门到进阶」等关键词时会自动匹配：
 
+### 5.1 触发示例
+
 - **Codex**：`用 from-zero-tutorial 写「从零开始学 Python」系列教程：先做学习路径规划，再写第一篇「为什么是 Python」。`
 - **Claude Code**：`使用 from-zero-tutorial 技能，为「零基础入门 Git」规划一个 8 课系列，然后写第一课。`
-- **WorkBuddy**：`用 from-zero-tutorial 写「零基础入门 Excel 函数」系列：先规划学习路径，再写第一篇。` 
+- **WorkBuddy**：`用 from-zero-tutorial 写「零基础入门 Excel 函数」系列：先规划学习路径，再写第一篇。`
 - **千问办公（QwenWork）**：`使用 from-zero-tutorial 技能，为「从零开始学摄影」做系列规划并写第一课。`
 
+### 5.2 执行流程
+
 触发后技能会按七步流程自动执行：web search 取材 → 系列规划 → 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需），全程无需手动分步；关键数据会做双源核实，案例与数据禁止编造。
+
 ## 6. 快速开始
 
-1. 安装依赖：
+### 6.1 安装依赖
 
-   - Python 3 + `pip install markdown beautifulsoup4 pyyaml requests`；
-   - Node.js 18+（配图生成需要；Playwright 可选，未装则用本机 Edge/Chrome）。
+- Python 3 + `pip install markdown beautifulsoup4 pyyaml requests`；
+- Node.js 18+（配图生成需要；Playwright 可选，未装则用本机 Edge/Chrome）。
 
-2. 复制配置模板并填写公众号凭据：
+### 6.2 复制配置并填写凭据
 
-   ```powershell
-   Copy-Item config.yaml.example config.yaml
-   # 编辑 config.yaml，填入 AppID / AppSecret
-   ```
+```powershell
+Copy-Item config.yaml.example config.yaml
+# 编辑 config.yaml，填入 AppID / AppSecret
+```
 
-3. 使用示例（在技能根目录执行，`--input` 传你自己的文章路径）：
+### 6.3 使用示例
 
-   ```powershell
-   # 文章 → 微信兼容 HTML（主题可指定，默认随机）
-   python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refined-blue
+在技能根目录执行，`--input` 传你自己的文章路径。
 
-   # 配图与内容校验（在系列目录运行）
-   node scripts/check-images.mjs --root "你的系列目录"
-   node scripts/check-articles.mjs --root "你的系列目录"
+#### 6.3.1 转 HTML
 
-   # 发布到公众号草稿箱（先干跑核对账号/标题/图片）
-   python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
-   ```
+```powershell
+python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refined-blue
+```
+
+#### 6.3.2 配图与内容校验
+
+在系列目录运行：
+
+```powershell
+node scripts/check-images.mjs --root "你的系列目录"
+node scripts/check-articles.mjs --root "你的系列目录"
+```
+
+#### 6.3.3 发布到公众号草稿箱
+
+先干跑核对账号/标题/图片：
+
+```powershell
+python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
+```
 
 完整用法见 [SKILL.md](SKILL.md)（技能主文档：铁律、七步流程、设计原则）与 [references/](references/)（规划 / 单篇写作 / 配图 / 发布规范）。
 
