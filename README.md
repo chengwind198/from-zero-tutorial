@@ -15,6 +15,15 @@
 - 公众号草稿发布/更新：防重复发布、UTF-8 中文原文发送、图片 CDN 复用；
 - 自动化校验：配图一一对应（0 断链 / 0 未用图 / 缺封面 / 缺正文图）、内容厚度 3500-8000 字。
 
+## 安装为 Codex 技能
+
+把本仓库克隆（或复制目录）到 Codex 技能目录即可被识别：
+
+- Windows：`C:\Users\<你>\.codex\skills\from-zero-tutorial` 
+- 也可以使用 Codex 的 skill 安装器从本仓库安装
+
+技能名即目录名 `from-zero-tutorial`，Codex 会按 [SKILL.md](SKILL.md) 的 description 自动匹配触发。
+
 ## 快速开始
 
 1. 安装依赖：
@@ -66,4 +75,4 @@
 
 ## 许可证
 
-暂未指定，发布到 GitHub 前请补充 LICENSE。
+本项目采用 [Apache License 2.0](LICENSE) 开源（Copyright 2026 chengwind198）。
