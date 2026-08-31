@@ -45,6 +45,8 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 
 - **Codex**：`用 from-zero-tutorial 写「从零开始学 Python」系列教程：先做学习路径规划，再写第一篇「为什么是 Python」。`
 - **Claude Code**：`使用 from-zero-tutorial 技能，为「零基础入门 Git」规划一个 8 课系列，然后写第一课。`
+- **WorkBuddy**：`用 from-zero-tutorial 写「零基础入门 Excel 函数」系列：先规划学习路径，再写第一篇。` 
+- **千问办公（QwenWork）**：`使用 from-zero-tutorial 技能，为「从零开始学摄影」做系列规划并写第一课。`
 
 触发后技能会按七步流程自动执行：web search 取材 → 系列规划 → 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需），全程无需手动分步；关键数据会做双源核实，案例与数据禁止编造。
 ## 快速开始
