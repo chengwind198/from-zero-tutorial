@@ -15,14 +15,26 @@
 - 公众号草稿发布/更新：防重复发布、UTF-8 中文原文发送、图片 CDN 复用；
 - 自动化校验：配图一一对应（0 断链 / 0 未用图 / 缺封面 / 缺正文图）、内容厚度 3500-8000 字。
 
-## 安装为 Codex 技能
+## 安装到各 AI 工具
 
-把本仓库克隆（或复制目录）到 Codex 技能目录即可被识别：
+本项目是标准 Agent Skill：目录名 `from-zero-tutorial`、根目录带 `SKILL.md`，克隆或复制到对应工具的技能目录即可被识别（Windows 直接复制整个文件夹，Linux/macOS 也可用符号链接）。
 
-- Windows：`C:\Users\<你>\.codex\skills\from-zero-tutorial` 
-- 也可以使用 Codex 的 skill 安装器从本仓库安装
+| 工具 | 安装位置 / 方式 |
+| --- | --- |
+| Codex | 个人技能 `C:\Users\<你>\.codex\skills\from-zero-tutorial`（Linux/macOS：`~/.codex/skills/from-zero-tutorial`），或使用 Codex 的 skill 安装器 |
+| Claude Code | 个人技能 `~/.claude/skills/from-zero-tutorial`；项目级放 `.claude/skills/` |
+| Trae | 项目级 `.trae/skills/from-zero-tutorial`，或「设置 → Rules and Skills → 导入 SKILL.md」 |
+| DeepSeek Harness | 放入 `$DSH_HOME/skills/from-zero-tutorial`；也可在 Web UI「设置 → 插件 → Skills」中从本仓库一键安装 |
+| WorkBuddy | 个人技能 `~/.workbuddy/skills/from-zero-tutorial`（部分版本为 `C:\Users\<你>\WorkBuddy\Claw\skills\`，以官方文档为准），或通过 WorkBuddy 技能市场安装 |
 
-技能名即目录名 `from-zero-tutorial`，Codex 会按 [SKILL.md](SKILL.md) 的 description 自动匹配触发。
+一条命令示例（Claude Code，Linux/macOS）：
+
+```bash
+mkdir -p ~/.claude/skills
+git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.claude/skills/from-zero-tutorial
+```
+
+其他工具同理：把仓库复制/克隆到上表对应目录，目录名保持 `from-zero-tutorial`，各工具会按 [SKILL.md](SKILL.md) 的 description 自动匹配触发。
 
 ## 快速开始
 
