@@ -26,6 +26,8 @@
 | Trae | 项目级 `.trae/skills/from-zero-tutorial`，或「设置 → Rules and Skills → 导入 SKILL.md」 |
 | DeepSeek Harness | 放入 `$DSH_HOME/skills/from-zero-tutorial`；也可在 Web UI「设置 → 插件 → Skills」中从本仓库一键安装 |
 | WorkBuddy | 个人技能 `~/.workbuddy/skills/from-zero-tutorial`（部分版本为 `C:\Users\<你>\WorkBuddy\Claw\skills\`，以官方文档为准），或通过 WorkBuddy 技能市场安装 |
+| 阿里千问办公（QwenWork） | 个人技能 `~/.qwenworkcn/skills/from-zero-tutorial`（Windows：`C:\Users\<你>\.qwenworkcn\skills\`），或在千问办公「技能 → 安装技能」上传 SKILL.md 及辅助文件 |
+| 百度搭子（DuMate） | 客户端「技能 → 安装技能」导入含 SKILL.md 的 zip 压缩包（支持拖入 URL）；技能广场可安装内置技能 |
 
 一条命令示例（Claude Code，Linux/macOS）：
 
