@@ -2,11 +2,23 @@
 
 一个把「零基础系列教程」当作学习产品来生产的 Codex Agent Skill：先弄清读者和终点，再规划学习路径，再逐篇写作。每篇都能动手、有完成标志，读者跟着走完就有真实能力。
 
-## 它解决什么问题
+## 目录
+
+1. [它解决什么问题](#1-它解决什么问题)
+2. [核心特性](#2-核心特性)
+3. [使用效果](#3-使用效果)
+4. [安装到各 AI 工具](#4-安装到各-ai-工具)
+5. [在 Codex / Claude Code 中使用示例](#5-在-codex-claude-code-中使用示例)
+6. [快速开始](#6-快速开始)
+7. [目录结构](#7-目录结构)
+8. [隐私与安全](#8-隐私与安全)
+9. [许可证](#9-许可证)
+
+## 1. 它解决什么问题
 
 系列教程常见的坑：想到哪写到哪、默认读者有前置知识、只讲不练、数据编造、写完没人校验。本技能用一条强制流程把这些堵住：**取材先行 → 双源核实 → 规划路径 → 逐篇写作 → 动手验证 → 转 HTML →（可选）发布微信公众号草稿**。
 
-## 核心特性
+## 2. 核心特性
 
 - 七步流程：取材分析 → 系列规划 → 素材库 → 逐篇写作 → 验证回填 → 转 HTML → 发布微信；
 - 十条设计原则：无门槛可学、每课有完成标志、术语首现一句话解释、官方资料优先、禁止编造案例与数据；
@@ -15,7 +27,7 @@
 - 公众号草稿发布/更新：防重复发布、UTF-8 中文原文发送、图片 CDN 复用；
 - 自动化校验：配图一一对应（0 断链 / 0 未用图 / 缺封面 / 缺正文图）、内容厚度 3500-8000 字。
 
-## 使用效果
+## 3. 使用效果
 
 ![系列文章规划示例效果](images/系列文章规划示例效果.png)
 
@@ -25,7 +37,7 @@
 
 **示例公众号文章显示效果**：微信公众号文章预览。
 
-## 安装到各 AI 工具
+## 4. 安装到各 AI 工具
 
 本项目是标准 Agent Skill：目录名 `from-zero-tutorial`、根目录带 `SKILL.md`，克隆或复制到对应工具的技能目录即可被识别（Windows 直接复制整个文件夹，Linux/macOS 也可用符号链接）。
 
@@ -49,7 +61,7 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 
 其他工具同理：把仓库复制/克隆到上表对应目录，目录名保持 `from-zero-tutorial`，各工具会按 [SKILL.md](SKILL.md) 的 description 自动匹配触发。
 
-## 在 Codex / Claude Code 中使用示例
+## 5. 在 Codex / Claude Code 中使用示例
 
 安装后无需额外配置，直接对 AI 说需求即可——技能描述包含「从零开始学 XXX / 零基础入门 / 从入门到进阶」等关键词时会自动匹配：
 
@@ -59,7 +71,7 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 - **千问办公（QwenWork）**：`使用 from-zero-tutorial 技能，为「从零开始学摄影」做系列规划并写第一课。`
 
 触发后技能会按七步流程自动执行：web search 取材 → 系列规划 → 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需），全程无需手动分步；关键数据会做双源核实，案例与数据禁止编造。
-## 快速开始
+## 6. 快速开始
 
 1. 安装依赖：
 
@@ -89,7 +101,7 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 
 完整用法见 [SKILL.md](SKILL.md)（技能主文档：铁律、七步流程、设计原则）与 [references/](references/)（规划 / 单篇写作 / 配图 / 发布规范）。
 
-## 目录结构
+## 7. 目录结构
 
 | 路径 | 说明 |
 | --- | --- |
@@ -102,12 +114,12 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 | [config.yaml.example](config.yaml.example) | 发布配置模板（真实配置 `config.yaml` 不入库） |
 | [draft-records.example.json](draft-records.example.json) | 草稿记录空模板（真实记录由脚本自动创建，不入库） |
 
-## 隐私与安全
+## 8. 隐私与安全
 
 - `config.yaml` 含公众号 AppSecret，已加入 `.gitignore`，**绝不提交**；
 - `draft-records.json` / `draft-records.backup.json` 含本机路径与图片映射，是本地运行数据，已加入 `.gitignore`，脚本会自动创建；
 - 写作铁律：关键数据双源核实、禁止编造案例/数据/对话；截图注意裁掉用户名、路径、密钥。
 
-## 许可证
+## 9. 许可证
 
 本项目采用 [Apache License 2.0](LICENSE) 开源（Copyright 2026 chengwind198）。
