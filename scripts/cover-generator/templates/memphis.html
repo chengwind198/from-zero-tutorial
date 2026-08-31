@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#f7f3ea;--ink:#141414;--mint:#4fd1c5;--coral:#ff6b6b;--lemon:#ffd93d;--grape:#7c5cff}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Microsoft YaHei",sans-serif;background-color:var(--bg);background-image:
+repeating-linear-gradient(45deg,var(--grape) 0 18px,transparent 18px 40px),
+radial-gradient(circle at 18% 88%,var(--coral) 0 26px,transparent 27px),
+radial-gradient(circle at 88% 16%,var(--lemon) 0 20px,transparent 21px),
+radial-gradient(circle at 72% 82%,var(--mint) 0 16px,transparent 17px);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;overflow:hidden}
+.top{display:flex;gap:14px;font-size:15px;font-weight:700;color:var(--grape)}
+.lesson{background:var(--lemon);color:var(--ink);padding:4px 14px;border-radius:8px;transform:rotate(-3deg)}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+h1{font-size:clamp(32px,6vw,{{TITLE_SIZE}}px);line-height:1.1;font-weight:800;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--coral);font-weight:700}
+.bottom{font-size:13px;border-top:6px solid var(--mint);padding-top:8px}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span class="lesson">第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

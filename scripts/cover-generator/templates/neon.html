@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#08060f;--cyan:#00fff0;--magenta:#ff2d95}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Microsoft YaHei",sans-serif;background-color:var(--bg);background-image:linear-gradient(180deg,transparent 0 55%,rgba(0,255,240,.08) 55% 56%,transparent 56% 60%,rgba(255,45,149,.06) 60% 61%,transparent 61%);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:42px 52px;overflow:hidden}
+.top{display:flex;gap:14px;font-size:14px;color:var(--cyan);letter-spacing:3px}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:16px}
+h1{font-size:clamp(30px,5.8vw,{{TITLE_SIZE}}px);line-height:1.2;font-weight:800;color:var(--cyan);text-shadow:0 0 5px var(--cyan),0 0 16px var(--cyan),0 0 42px var(--cyan),0 0 88px var(--cyan);overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--magenta);text-shadow:0 0 5px var(--magenta),0 0 18px var(--magenta)}
+.bottom{display:flex;justify-content:space-between;font-size:13px;color:#8b8ba3;border-top:1px solid rgba(255,255,255,.12);padding-top:10px}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom"><span>{{FOOTER}}</span><span>{{DATE}}</span></div>
+</body></html>

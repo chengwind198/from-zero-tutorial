@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+:root {
+  --bg: #0b0d0c;
+  --fg: #e8ffe9;
+  --accent: #4ade80;
+  --dim: #7e9488;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  height: 100%;
+}
+html { background: var(--bg); }
+body {
+  font-family: "Cascadia Mono", "Consolas", "Courier New", monospace;
+  background-color: var(--bg);
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 2px);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 48px;
+  border-left: 10px solid var(--accent);
+  overflow: hidden;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  color: var(--dim);
+  letter-spacing: 2px;
+}
+.top .prompt { color: var(--accent); }
+.lesson { color: var(--accent); }
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+h1 {
+  font-size: clamp(28px, 5.4vw, {{TITLE_SIZE}}px);
+  line-height: 1.2;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.subtitle {
+  font-size: clamp(14px, 2vw, 20px);
+  color: var(--dim);
+}
+.subtitle::before { content: "# "; color: var(--accent); }
+.bottom {
+  font-size: 14px;
+  color: var(--dim);
+}
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 16px;
+  background: var(--accent);
+  vertical-align: -2px;
+  margin-left: 4px;
+}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="prompt">▸</span>
+    <span>{{SERIES}}</span>
+    <span class="lesson">lesson_{{LESSON}}</span>
+    <span>{{CATEGORY}}</span>
+  </div>
+  <div class="main">
+    <h1>$ {{TITLE}}</h1>
+    <div class="subtitle">{{SUBTITLE}}</div>
+  </div>
+  <div class="bottom">{{FOOTER}}<span class="cursor"></span></div>
+</body>
+</html>

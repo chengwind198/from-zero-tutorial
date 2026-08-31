@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#1a1c2c;--fg:#f4f4f4;--y:#ffcd75;--o:#ef7d57;--g:#38b764;--b:#41a6f6}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Courier New",monospace;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;overflow:hidden}
+.top{display:flex;gap:10px;font-size:14px}
+.top span{background:var(--bg);border:3px solid var(--y);padding:4px 10px;color:var(--y);clip-path:polygon(0 8px,8px 8px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 8px) calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 8px),0 calc(100% - 8px))}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+h1{font-size:clamp(30px,5.8vw,{{TITLE_SIZE}}px);line-height:1.25;font-weight:700;color:var(--fg);text-shadow:4px 0 0 var(--y),-4px 0 0 var(--b),0 4px 0 var(--o),0 -4px 0 var(--g);overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--y)}
+.bottom{display:flex;justify-content:space-between;font-size:13px;color:var(--fg)}
+.bar{width:160px;height:14px;border:2px solid var(--fg);position:relative}
+.bar::before{content:"";position:absolute;inset:2px;width:55%;background:repeating-linear-gradient(90deg,var(--g) 0 10px,var(--bg) 10px 16px)}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>LV.{{LESSON}}</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom"><span>{{FOOTER}}</span><span class="bar"></span></div>
+</body></html>

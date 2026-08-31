@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#fbfbfd;--ink:#14151a;--sub:#5b6070;--accent:#2f5cff;--line:#e6e8ef}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:48px 60px;overflow:hidden}
+.top{display:flex;gap:12px;font-size:14px;color:var(--sub)}
+.lesson{background:var(--accent);color:#fff;border-radius:999px;padding:3px 14px;font-size:13px}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:16px;max-width:82%}
+h1{font-size:clamp(32px,6vw,{{TITLE_SIZE}}px);line-height:1.2;font-weight:700;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(16px,2.3vw,24px);color:var(--sub)}
+.bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;font-size:13px;color:var(--sub)}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#f1f3f9;border-radius:8px;padding:5px 12px}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span class="lesson">第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom"><span>{{FOOTER}}</span><span class="chip">{{DATE}}</span></div>
+</body></html>

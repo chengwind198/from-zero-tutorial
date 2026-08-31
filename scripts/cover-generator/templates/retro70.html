@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#f3e3c3;--ink:#5a2f1c;--o:#e0672f;--y:#d9a441;--br:#8c4a2f}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Yuanti SC","PingFang SC",sans-serif;background-color:var(--bg);background-image:linear-gradient(90deg,transparent 0 86%,var(--o) 86% 90%,var(--y) 90% 94%,var(--br) 94% 98%,transparent 98%);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:42px 52px;overflow:hidden;position:relative}
+body::after{content:"";position:absolute;right:24px;top:0;width:170px;height:100%;background:linear-gradient(90deg,transparent 0 22%,rgba(224,103,47,.55) 22% 62%,rgba(217,164,65,.55) 62% 78%,rgba(140,74,47,.55) 78%);border-radius:85px 0 0 85px/50% 0 0 50%;pointer-events:none}
+.top,.main,.bottom{position:relative;z-index:1}
+.top{display:flex;gap:14px;font-size:15px;font-weight:700}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding-right:200px}
+h1{font-size:clamp(30px,5.6vw,{{TITLE_SIZE}}px);line-height:1.2;font-weight:900;color:var(--o);overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--br)}
+.bottom{font-size:13px;color:var(--br);border-top:3px solid var(--y);padding-top:8px}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

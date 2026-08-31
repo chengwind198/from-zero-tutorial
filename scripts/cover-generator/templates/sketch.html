@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+:root {
+  --bg: #fdfcf8;
+  --ink: #2b3a55;
+  --sub: #5b6c85;
+  --marker: #ffe066;
+  --pen: #ff7b6b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  height: 100%;
+}
+html { background: var(--bg); }
+body {
+  font-family: "Hanzipen SC", "Hannotate SC", "Marker Felt", "Comic Sans MS", sans-serif;
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(43, 58, 85, 0.07) 0 1px, transparent 1px);
+  background-size: 18px 18px;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 48px;
+  overflow: hidden;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  color: var(--sub);
+}
+.lesson {
+  background: var(--marker);
+  color: var(--ink);
+  padding: 3px 14px;
+  border-radius: 6px;
+  transform: rotate(-1.5deg);
+}
+.category {
+  border: 2px dashed var(--pen);
+  color: var(--pen);
+  padding: 3px 12px;
+  transform: rotate(1deg);
+}
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  position: relative;
+}
+.main::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 28px;
+  width: 82%;
+  height: 40%;
+  background: var(--marker);
+  opacity: 0.45;
+  transform: rotate(-1.2deg);
+  pointer-events: none;
+}
+h1 {
+  position: relative;
+  font-size: clamp(30px, 6vw, {{TITLE_SIZE}}px);
+  line-height: 1.25;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--pen);
+  text-underline-offset: 8px;
+}
+.subtitle {
+  position: relative;
+  font-size: clamp(16px, 2.2vw, 24px);
+  color: var(--sub);
+}
+.bottom {
+  font-size: 15px;
+  color: var(--sub);
+}
+.bottom::before { content: "✎ "; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <span>{{SERIES}}</span>
+    <span class="lesson">第 {{LESSON}} 课</span>
+    <span class="category">{{CATEGORY}}</span>
+  </div>
+  <div class="main">
+    <h1>{{TITLE}}</h1>
+    <div class="subtitle">{{SUBTITLE}}</div>
+  </div>
+  <div class="bottom">{{FOOTER}}</div>
+</body>
+</html>

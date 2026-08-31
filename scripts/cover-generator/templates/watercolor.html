@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#fbf8f2;--ink:#2f2b26;--c1:#6fb0dc;--c2:#f5a288;--c3:#9ec98a}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Songti SC","SimSun",serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:42px 52px;overflow:hidden;position:relative}
+.wash{position:absolute;border-radius:50%;filter:blur(26px);opacity:.42}
+.w1{width:220px;height:220px;background:var(--c1);right:80px;top:30px}
+.w2{width:200px;height:200px;background:var(--c2);right:40px;top:120px}
+.w3{width:180px;height:180px;background:var(--c3);right:130px;bottom:60px}
+.top,.main,.bottom{position:relative;z-index:1}
+.top{display:flex;gap:14px;font-size:14px;color:var(--ink);letter-spacing:2px}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding-right:260px}
+h1{font-size:clamp(30px,5.4vw,{{TITLE_SIZE}}px);line-height:1.25;font-weight:600;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.1vw,22px);color:var(--ink);opacity:.75}
+.bottom{font-size:13px;color:var(--ink);opacity:.7}
+</style></head><body>
+<div class="wash w1"></div><div class="wash w2"></div><div class="wash w3"></div>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

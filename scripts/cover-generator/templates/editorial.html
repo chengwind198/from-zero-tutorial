@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#f4f1ea;--ink:#16160f;--sub:#6a675c;--accent:#a8331f;--line:#d5d0c3}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Songti SC","SimSun","Noto Serif SC",serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:42px 50px;overflow:hidden}
+.top{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:8px 0;display:flex;justify-content:space-between;font-size:13px;letter-spacing:3px;color:var(--sub);text-transform:uppercase}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+h1{font-size:clamp(32px,6vw,{{TITLE_SIZE}}px);line-height:1.15;font-weight:600;overflow-wrap:anywhere}
+h1::first-letter{font-size:1.4em}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--sub)}
+.bottom{border-top:1px solid var(--line);padding-top:10px;font-size:13px;color:var(--sub);letter-spacing:2px}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课 · {{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

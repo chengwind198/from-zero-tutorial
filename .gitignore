@@ -1,0 +1,17 @@
+# 发布凭据（含密钥），绝不提交
+config.yaml
+
+# 本地草稿记录（含本机路径与图片 CDN 映射，不入库；脚本会自动创建）
+draft-records.json
+draft-records.backup.json
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# Node 依赖
+node_modules/
+
+# 系统文件
+.DS_Store
+Thumbs.db

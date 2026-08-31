@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#f2efe6;--ink:#141414;--red:#e63329;--yellow:#f7c400;--blue:#1b4bd8}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;overflow:hidden;position:relative}
+.shape{position:absolute;z-index:0}
+.circle{width:120px;height:120px;border-radius:50%;background:var(--red);right:60px;top:40px}
+.triangle{width:0;height:0;border-left:70px solid transparent;border-right:70px solid transparent;border-bottom:120px solid var(--blue);right:160px;bottom:60px}
+.square{width:110px;height:110px;background:var(--yellow);left:80px;bottom:80px}
+.top,.main,.bottom{position:relative;z-index:1}
+.top{display:flex;gap:14px;font-size:14px;color:var(--ink);font-weight:700;letter-spacing:2px}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+h1{font-size:clamp(32px,6vw,{{TITLE_SIZE}}px);line-height:1.1;font-weight:800;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);font-weight:400}
+.bottom{font-size:13px;border-top:3px solid var(--ink);padding-top:8px}
+</style></head><body>
+<div class="shape circle"></div><div class="shape triangle"></div><div class="shape square"></div>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

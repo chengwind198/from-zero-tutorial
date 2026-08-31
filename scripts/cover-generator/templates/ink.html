@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+:root {
+  --paper: #f5f1e8;
+  --ink: #1a1a18;
+  --sub: #6f6a5e;
+  --wash: rgba(26, 26, 24, 0.14);
+  --seal: #8c1f1f;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  height: 100%;
+}
+html { background: var(--paper); }
+body {
+  font-family: "Songti SC", "SimSun", "Noto Serif SC", serif;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 78% 18%, rgba(26,26,24,0.10) 0 90px, transparent 91px),
+    radial-gradient(circle at 62% 26%, rgba(26,26,24,0.07) 0 150px, transparent 151px);
+  color: var(--ink);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 48px;
+  overflow: hidden;
+}
+body::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 24px;
+  width: 220px;
+  height: 320px;
+  background: radial-gradient(circle, var(--wash), transparent 70%);
+  filter: blur(26px);
+  pointer-events: none;
+}
+.top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--sub);
+  letter-spacing: 3px;
+}
+.lesson {
+  border: 1px solid var(--ink);
+  padding: 3px 12px;
+  color: var(--ink);
+}
+.main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-right: 180px;
+}
+h1 {
+  writing-mode: vertical-rl;
+  font-size: clamp(28px, 4.6vw, {{TITLE_SIZE}}px);
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  overflow-wrap: anywhere;
+}
+.subtitle {
+  margin-left: 26px;
+  font-size: clamp(14px, 1.9vw, 20px);
+  color: var(--sub);
+  letter-spacing: 2px;
+}
+.seal {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  width: 64px;
+  height: 64px;
+  border: 3px solid var(--seal);
+  color: var(--seal);
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+}
+.bottom {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  color: var(--sub);
+  letter-spacing: 2px;
+  padding-right: 96px; /* 与右下角印章保持间距，避免超长 footer 文字压到印章 */
+}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span>{{SERIES}}</span>
+    <span class="lesson">第 {{LESSON}} 课</span>
+    <span>{{CATEGORY}}</span>
+  </div>
+  <div class="main">
+    <h1>{{TITLE}}</h1>
+    <div class="subtitle">{{SUBTITLE}}</div>
+  </div>
+  <div class="seal">学</div>
+  <div class="bottom">{{FOOTER}}</div>
+</body>
+</html>

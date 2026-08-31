@@ -1,0 +1,29 @@
+# from-zero-tutorial 发布配置模板
+# 首次使用：复制本文件为 config.yaml 并填入你自己的公众号 AppID/AppSecret。
+#   PowerShell: Copy-Item config.yaml.example config.yaml
+# config.yaml 含密钥，已被 .gitignore 忽略，不要提交到版本库。
+# md → HTML 的参数（--theme / --html-dir / --mermaid-cmd）全部走命令行，
+# 由 scripts/md-to-html.py 处理，不在此配置。
+
+# 默认账号（对应下方 accounts 里的键名）
+default: main
+
+accounts:
+  main:
+    name: 你的公众号名称
+    app_id: 你的AppID
+    app_secret: 你的AppSecret
+    author: 你的署名
+    # 可选：发布后同步的平台（留空不启用；当前脚本只负责公众号草稿）
+    sync_platforms: []
+
+publish:
+  # 正文图片上传失败时是否继续发布（false = 缺图即中止）
+  allow_missing_images: false
+  # 打开留言（true = 开，false = 关）；微信草稿接口 need_open_comment 字段
+  need_open_comment: true
+  # 是否仅粉丝可留言（false = 所有人可留言，true = 仅粉丝）
+  only_fans_can_comment: false
+  # 注意：微信没有「自动精选留言」的公开 API，该开关只能到公众号后台人工开启
+  # （路径：公众号后台 → 功能/互动 → 留言管理 → 自动精选）。
+  # 发布成功后 publish-wechat.py 会打印提醒。

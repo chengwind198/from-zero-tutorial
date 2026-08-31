@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:{{PALETTE_BG}}}
+/* 卡片高 100% 填满可用区域（渲染时布局视口小于窗口，内容一律通过行均分+裁剪防溢出） */
+body{font-family:"Microsoft YaHei",sans-serif;background:{{PALETTE_BG}};color:{{PALETTE_INK}};display:flex;align-items:flex-start;justify-content:center;padding:40px}
+.wrap{width:100%;height:100%;min-height:0;border:1px solid {{PALETTE_SUB}};border-radius:16px;padding:32px 36px;display:flex;flex-direction:column;gap:20px;background:rgba(128,128,128,.08);overflow:hidden}
+.head{display:flex;justify-content:space-between;align-items:center}
+.head h1{font-size:clamp(22px,3vw,30px);font-weight:800;line-height:1.25}
+.tag{color:{{PALETTE_ACCENT}};font-size:14px;letter-spacing:2px}
+.steps{flex:1;min-height:0;display:flex;align-items:stretch;gap:0}
+.step{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:0 12px;position:relative}
+.step + .step::before{content:"";position:absolute;left:0;top:50%;transform:translate(calc(-50% - 53px),-50%);width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:12px solid {{PALETTE_ACCENT}}}
+.step .num{width:34px;height:34px;border-radius:50%;background:{{PALETTE_ACCENT}};color:{{PALETTE_BG}};font-weight:800;display:flex;align-items:center;justify-content:center;font-size:16px}
+.step .name{font-size:clamp(15px,2vw,21px);font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.step .desc{font-size:clamp(11px,1.5vw,13px);color:{{PALETTE_SUB}};line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.foot{font-size:13px;color:{{PALETTE_SUB}}}
+</style></head><body>
+<div class="wrap">
+  <div class="head"><h1>{{TITLE}}</h1><span class="tag">{{TAG}}</span></div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><div class="name">{{STEP1}}</div><div class="desc">{{D1}}</div></div>
+    <div class="step"><div class="num">2</div><div class="name">{{STEP2}}</div><div class="desc">{{D2}}</div></div>
+    <div class="step"><div class="num">3</div><div class="name">{{STEP3}}</div><div class="desc">{{D3}}</div></div>
+    <div class="step"><div class="num">4</div><div class="name">{{STEP4}}</div><div class="desc">{{D4}}</div></div>
+  </div>
+  <div class="foot">{{FOOT}}</div>
+</div>
+</body></html>

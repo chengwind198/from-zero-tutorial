@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#26332e;--ink:#eef3ee;--sub:#9dbfae}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Hanzipen SC","Hannotate SC","Chalkboard SE",sans-serif;background-color:var(--bg);background-image:radial-gradient(rgba(255,255,255,.08) 0 1px,transparent 1px);background-size:4px 4px;color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:42px 50px;overflow:hidden}
+.top{display:flex;gap:14px;font-size:16px;color:var(--sub)}
+.lesson{color:var(--ink);text-shadow:0 0 1px rgba(255,255,255,.6)}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+h1{font-size:clamp(32px,6vw,{{TITLE_SIZE}}px);line-height:1.25;font-weight:700;text-shadow:0 0 1px rgba(255,255,255,.6);overflow-wrap:anywhere}
+h1::after{content:"";display:block;width:60%;height:4px;background:var(--ink);opacity:.7;margin-top:10px;transform:rotate(-1deg)}
+.subtitle{font-size:clamp(16px,2.3vw,24px);color:var(--sub)}
+.bottom{font-size:14px;color:var(--sub);border-top:2px solid rgba(238,243,238,.35);padding-top:10px}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span class="lesson">第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

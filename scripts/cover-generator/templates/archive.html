@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#e7dfcd;--ink:#33302a;--sub:#5c5546;--stamp:#9b3227;--line:#c4b99f}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Courier New",monospace;background-color:var(--bg);background-image:radial-gradient(rgba(51,48,42,0.10) 0 1px,transparent 1px);background-size:3px 3px;color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:40px 56px;overflow:hidden;position:relative}
+body::before{content:"";position:absolute;left:16px;top:16px;bottom:16px;width:18px;background-image:radial-gradient(var(--ink) 2px,transparent 2px);background-size:14px 18px;opacity:.5}
+.top{font-size:13px;color:var(--sub);letter-spacing:2px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding-left:16px}
+h1{font-size:clamp(30px,5.6vw,{{TITLE_SIZE}}px);line-height:1.25;font-weight:700;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(14px,2vw,20px);color:var(--sub)}
+.bottom{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:8px;font-size:12px;color:var(--sub)}
+.stamp{display:inline-block;border:3px double var(--stamp);color:var(--stamp);padding:3px 10px;transform:rotate(-4deg);font-weight:700}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom"><span>{{FOOTER}}</span><span class="stamp">{{CATEGORY}}</span></div>
+</body></html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#e9e3d6;--paper:#fbf9f4;--ink:#1c1a17;--red:#e8503a;--yellow:#f0d678}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Hanzipen SC","Hannotate SC",sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;overflow:hidden}
+.top{display:flex;gap:12px;font-size:15px}
+.top span{background:var(--paper);padding:4px 12px;border:1.5px solid var(--ink);transform:rotate(-1.5deg)}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:16px;position:relative}
+h1{font-size:clamp(30px,5.8vw,{{TITLE_SIZE}}px);line-height:1.4;font-weight:700;overflow-wrap:anywhere}
+h1 span{display:inline-block;background:var(--paper);padding:2px 8px;border:1.5px solid var(--ink);margin:2px}
+h1 span:nth-child(3n){background:var(--yellow);transform:rotate(1.5deg)}
+h1 span:nth-child(2n){transform:rotate(-1deg)}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--ink)}
+.tape{position:absolute;right:20px;top:-10px;width:120px;height:26px;background:rgba(240,214,120,.85);transform:rotate(6deg);border-left:2px dashed rgba(28,26,23,.4);border-right:2px dashed rgba(28,26,23,.4)}
+.bottom{font-size:14px;background:var(--red);color:var(--paper);padding:6px 14px;transform:rotate(-0.8deg);align-self:flex-start}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><div class="tape"></div><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--paper:#f2efe6;--c1:#ff4f38;--c2:#2b4bff}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--paper)}
+body{font-family:"Microsoft YaHei",sans-serif;background-color:var(--paper);background-image:radial-gradient(rgba(20,20,20,.13) 0 1px,transparent 1px);background-size:3px 3px;color:#141414;display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;overflow:hidden;position:relative}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:16px;position:relative;z-index:2}
+h1{font-size:clamp(32px,6vw,{{TITLE_SIZE}}px);line-height:1.15;font-weight:800;overflow-wrap:anywhere;color:var(--c2);mix-blend-mode:multiply}
+h1::after{content:attr(data-title);position:absolute;left:7px;top:7px;color:var(--c1);mix-blend-mode:multiply;z-index:-1}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:#141414}
+.top,.bottom{position:relative;z-index:2}
+.top{display:flex;gap:14px;font-size:14px;letter-spacing:2px}
+.bottom{font-size:13px;border-top:3px solid var(--c1);padding-top:8px}
+</style></head><body>
+<div class="top"><span style="color:var(--c2);font-weight:700">{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+<div class="main"><h1 data-title="{{TITLE}}">{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

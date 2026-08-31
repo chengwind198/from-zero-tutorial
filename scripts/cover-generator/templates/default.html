@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+:root {
+  --bg1: #0f172a;
+  --bg2: #1e293b;
+  --accent: #f59e0b;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  height: 100%;
+}
+html { background: var(--bg2); }
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 48px;
+  overflow: hidden;
+}
+.top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.series { font-size: 18px; color: var(--muted); letter-spacing: 2px; }
+.lesson {
+  background: var(--accent);
+  color: #0f172a;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 16px;
+}
+.category {
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 15px;
+}
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+h1 {
+  font-size: clamp(30px, 6vw, {{TITLE_SIZE}}px);
+  line-height: 1.25;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+.subtitle { font-size: clamp(16px, 2.2vw, 24px); color: var(--muted); }
+.bottom { font-size: 15px; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="series">{{SERIES}}</span>
+    <span class="lesson">第 {{LESSON}} 课</span>
+    <span class="category">{{CATEGORY}}</span>
+  </div>
+  <div class="main">
+    <h1>{{TITLE}}</h1>
+    <div class="subtitle">{{SUBTITLE}}</div>
+  </div>
+  <div class="bottom">{{FOOTER}}</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#f0ede6;--ink:#14140f;--sub:#585448;--rule:#14140f}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Songti SC","SimSun","Noto Serif SC",serif;background-color:var(--bg);background-image:radial-gradient(rgba(20,20,15,0.12) 0 1px,transparent 1px);background-size:4px 4px;color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;overflow:hidden}
+.top{font-size:13px;color:var(--sub);display:flex;justify-content:space-between;letter-spacing:2px;border-bottom:4px solid var(--rule)}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:12px}
+h1{font-size:clamp(34px,6vw,{{TITLE_SIZE}}px);line-height:1.2;font-weight:700;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:var(--sub)}
+.bottom{border-top:1px solid var(--rule);padding-top:8px;font-size:12px;color:var(--sub);letter-spacing:2px}
+</style></head><body>
+<div class="top"><span>{{SERIES}}</span><span>{{DATE}}</span></div>
+<div class="main"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div>
+<div class="bottom">{{FOOTER}}</div>
+</body></html>

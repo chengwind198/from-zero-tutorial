@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:linear-gradient(140deg,#101a2e,#1b2b45 46%,#22364f);--fg:#eef3fa}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:#101a2e}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;justify-content:space-between;padding:44px 54px;overflow:hidden;position:relative}
+.orb{position:absolute;border-radius:50%;filter:blur(58px)}
+.o1{width:240px;height:240px;background:rgba(45,212,191,.42);right:80px;top:40px}
+.o2{width:200px;height:200px;background:rgba(251,113,133,.35);right:180px;bottom:30px}
+.card{position:relative;z-index:1;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.42);border-radius:18px;padding:34px 40px}
+.top{display:flex;gap:12px;font-size:14px;color:rgba(238,243,250,.75);letter-spacing:2px}
+h1{font-size:clamp(30px,5.6vw,{{TITLE_SIZE}}px);line-height:1.2;font-weight:700;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(15px,2.2vw,22px);color:rgba(238,243,250,.72)}
+.bottom{display:flex;justify-content:space-between;font-size:13px;color:rgba(238,243,250,.6);border-top:1px solid rgba(255,255,255,.12);padding-top:10px;position:relative;z-index:1}
+</style></head><body>
+<div class="orb o1"></div><div class="orb o2"></div>
+<div class="card">
+  <div class="top"><span>{{SERIES}}</span><span>第 {{LESSON}} 课</span><span>{{CATEGORY}}</span></div>
+  <h1>{{TITLE}}</h1>
+  <div class="subtitle">{{SUBTITLE}}</div>
+</div>
+<div class="bottom"><span>{{FOOTER}}</span><span>{{DATE}}</span></div>
+</body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+:root {
+  --bg: #0d2b4d;
+  --ink: #e8f2fc;
+  --sub: #7fb0dc;
+  --accent: #4da3ff;
+  --line: rgba(160, 205, 245, 0.22);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  height: 100%;
+}
+html { background: var(--bg); }
+body {
+  font-family: "Cascadia Mono", "Consolas", "Courier New", monospace;
+  background-color: var(--bg);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 19px, var(--line) 19px, var(--line) 20px),
+    repeating-linear-gradient(90deg, transparent, transparent 19px, var(--line) 19px, var(--line) 20px),
+    repeating-linear-gradient(0deg, transparent, transparent 99px, rgba(160, 205, 245, 0.38) 99px, rgba(160, 205, 245, 0.38) 100px),
+    repeating-linear-gradient(90deg, transparent, transparent 99px, rgba(160, 205, 245, 0.38) 99px, rgba(160, 205, 245, 0.38) 100px);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 48px;
+  overflow: hidden;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  color: var(--sub);
+  letter-spacing: 2px;
+}
+.lesson {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 3px 10px;
+}
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+h1 {
+  font-size: clamp(30px, 5.6vw, {{TITLE_SIZE}}px);
+  line-height: 1.2;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.dimension {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: 13px;
+}
+.dimension::before,
+.dimension::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--accent);
+}
+.dimension .line { flex: 1; height: 0; border-top: 1px solid var(--accent); }
+.subtitle { font-size: clamp(14px, 2vw, 20px); color: var(--sub); }
+.titleblock {
+  border: 1.5px solid var(--accent);
+  background: rgba(13, 43, 77, 0.85);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--sub);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  letter-spacing: 1px;
+  align-self: flex-end;
+}
+.titleblock b { color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <span>{{SERIES}}</span>
+    <span class="lesson">NO.{{LESSON}}</span>
+    <span>{{CATEGORY}}</span>
+  </div>
+  <div class="main">
+    <h1>{{TITLE}}</h1>
+    <div class="dimension"><i></i><span class="line"></span><i></i></div>
+    <div class="subtitle">{{SUBTITLE}}</div>
+  </div>
+  <div class="titleblock">
+    <span>SCALE <b>1:1</b></span>
+    <span>DATE <b>{{DATE}}</b></span>
+    <span>FIG <b>{{LESSON}}</b></span>
+  </div>
+</body>
+</html>

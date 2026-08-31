@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><style>
+:root{--bg:#fcfbf8;--ink:#1e1e1c;--sub:#615d56;--dot:#c2482f}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+html{background:var(--bg)}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:44px 56px;overflow:hidden}
+.top{font-size:13px;color:var(--sub);letter-spacing:3px}
+.main{flex:1;min-height:0;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.left{display:flex;flex-direction:column;gap:14px;max-width:52%}
+h1{font-size:clamp(28px,5.2vw,{{TITLE_SIZE}}px);line-height:1.25;font-weight:300;overflow-wrap:anywhere}
+.subtitle{font-size:clamp(14px,2vw,20px);color:var(--sub)}
+.art{width:220px;height:220px;position:relative;flex-shrink:0}
+.art::before{content:"";position:absolute;inset:0;border:1.2px solid var(--ink);border-radius:50%}
+.art::after{content:"";position:absolute;left:50%;top:10%;width:1.2px;height:80%;background:var(--ink);transform:rotate(24deg)}
+.art .dot{position:absolute;left:50%;top:50%;width:10px;height:10px;border-radius:50%;background:var(--dot);transform:translate(-50%,-50%)}
+.bottom{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);border-top:1px solid #e5e1d8;padding-top:10px}
+</style></head><body>
+<div class="top">{{SERIES}} · 第 {{LESSON}} 课</div>
+<div class="main"><div class="left"><h1>{{TITLE}}</h1><div class="subtitle">{{SUBTITLE}}</div></div><div class="art"><div class="dot"></div></div></div>
+<div class="bottom"><span>{{FOOTER}}</span><span>{{CATEGORY}}</span></div>
+</body></html>

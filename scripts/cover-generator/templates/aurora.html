@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+:root {
+  --bg: #0a0d12;
+  --fg: #eef1f6;
+  --sub: #8a93a6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  height: 100%;
+}
+html { background: var(--bg); }
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 18% 88%, rgba(45, 212, 191, 0.34) 0 160px, transparent 260px),
+    radial-gradient(circle at 8% 70%, rgba(251, 191, 36, 0.20) 0 120px, transparent 210px),
+    radial-gradient(rgba(255,255,255,0.14) 0 1px, transparent 1px);
+  background-size: auto, auto, 5px 5px;
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 52px;
+  overflow: hidden;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--sub);
+  letter-spacing: 2px;
+}
+.lesson {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 3px 12px;
+  color: var(--fg);
+}
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+h1 {
+  font-size: clamp(30px, 6vw, {{TITLE_SIZE}}px);
+  line-height: 1.25;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  max-width: 80%;
+}
+.subtitle {
+  font-size: clamp(15px, 2vw, 22px);
+  color: var(--sub);
+  max-width: 72%;
+}
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+  font-size: 13px;
+  color: var(--sub);
+}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span>{{SERIES}}</span>
+    <span class="lesson">第 {{LESSON}} 课</span>
+    <span>{{CATEGORY}}</span>
+  </div>
+  <div class="main">
+    <h1>{{TITLE}}</h1>
+    <div class="subtitle">{{SUBTITLE}}</div>
+  </div>
+  <div class="bottom">
+    <span>{{FOOTER}}</span>
+    <span>{{DATE}}</span>
+  </div>
+</body>
+</html>
