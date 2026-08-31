@@ -19,9 +19,6 @@
 
 ![使用效果截图 1](images/JSwypVkRyx.png)
 
-![使用效果截图 2：Obsidian 中的使用效果](images/Obsidian_aNiTNhU8nn.png)
-
-![使用效果截图 3：Obsidian 中的使用效果](images/Obsidian_FUW5YbhnMr.png)
 ## 安装到各 AI 工具
 
 本项目是标准 Agent Skill：目录名 `from-zero-tutorial`、根目录带 `SKILL.md`，克隆或复制到对应工具的技能目录即可被识别（Windows 直接复制整个文件夹，Linux/macOS 也可用符号链接）。
