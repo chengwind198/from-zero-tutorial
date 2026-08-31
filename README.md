@@ -26,6 +26,7 @@
 8. [目录结构](#8-目录结构)
 9. [隐私与安全](#9-隐私与安全)
 10. [许可证](#10-许可证)
+11. [项目信息](#11-项目信息)
 
 ## 1. 这个 Skill 是干嘛的？
 
@@ -190,3 +191,8 @@ python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
 ## 10. 许可证
 
 本项目采用 [Apache License 2.0](LICENSE) 开源（Copyright 2026 chengwind198）。
+
+## 11. 项目信息
+
+- GitHub：[https://github.com/chengwind198/from-zero-tutorial](https://github.com/chengwind198/from-zero-tutorial)
+- 微信公众号：AI灵感搭档
