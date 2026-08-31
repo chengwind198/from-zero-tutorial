@@ -28,7 +28,7 @@
 | WorkBuddy | 个人技能 `~/.workbuddy/skills/from-zero-tutorial`（部分版本为 `C:\Users\<你>\WorkBuddy\Claw\skills\`，以官方文档为准），或通过 WorkBuddy 技能市场安装 |
 | 阿里千问办公（QwenWork） | 个人技能 `~/.qwenworkcn/skills/from-zero-tutorial`（Windows：`C:\Users\<你>\.qwenworkcn\skills\`），或在千问办公「技能 → 安装技能」上传 SKILL.md 及辅助文件 |
 | 百度搭子（DuMate） | 客户端「技能 → 安装技能」导入含 SKILL.md 的 zip 压缩包（支持拖入 URL）；技能广场可安装内置技能 |
-| 豆包（Doubao 电脑版） | 打开豆包电脑版侧边栏「技能·连接器·伙伴」→ 技能商店安装，或自定义导入含 SKILL.md 的技能包（可将本仓库打包为 zip 导入） |
+| 豆包工作 | 打开 [豆包工作](https://www.doubao.com/work) → 「技能·连接器·伙伴」安装，或自定义导入含 SKILL.md 的技能包（可将本仓库打包为 zip 导入） |
 
 一条命令示例（Claude Code，Linux/macOS）：
 
