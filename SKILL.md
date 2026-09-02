@@ -1,9 +1,23 @@
 ---
 name: from-zero-tutorial
-description: 从零基础起步的系列教程（学习路径）写作技能。当用户要求写「从零开始学 XXX」「零基础入门 XXX」「XXX 从入门到进阶」类系列教程，或需要先规划学习路径再逐篇成文时使用；适用于任何主题（编程、语言、乐器、理财、运动、学科知识等），不限于代码类。铁律：动手写作前必须先做 web search 收集完整材料，素材不齐不写。
+description: 从零基础起步的系列教程（学习路径）或单篇文章写作技能。当用户要求写「从零开始学 XXX」「零基础入门 XXX」「XXX 从入门到进阶」类系列教程、需要先规划学习路径再逐篇成文，或只给定标题写一篇独立文章/公众号文章时使用；入口自动路由系列模式与单篇模式（无法判断默认单篇）。适用于任何主题（编程、语言、乐器、理财、运动、学科知识等），不限于代码类。铁律：动手写作前必须先做 web search 收集完整材料，素材不齐不写。
 ---
 
 # 从零开始学 XXX（From Zero Tutorial）
+
+## 模式路由（先读这里）
+
+本技能支持两种模式：**系列模式**（多篇教程，默认主流程）与**单篇模式**（给定标题写一篇文章）。收到请求先判断：
+
+- **系列模式**：请求含「系列 / 从零开始学 / 零基础入门 / 第 N 篇 / 规划 / 多篇 / 合集 / 课程 / 进阶 / 续篇」，或「先写一篇、后面做成系列」→ 走下方「系列模式：七步流程」；
+- **单篇模式**：请求含「写一篇 / 一篇文章 / 单篇 / 标题是 / 公众号文章 / 只写 XX / 独立文章」，或无法判断（默认）→ 读 [references/single-mode.md](references/single-mode.md)，按单篇五步执行；
+- 两套信号都出现 → 系列模式。
+
+### 执行纪律（防串模式）
+
+- 单篇模式：不建系列规划.md、不建素材库.md、frontmatter 不写 lesson、正文不写「下一步」、收尾不回填三处、配图校验用 `check-images.mjs --strict`；
+- 系列模式：每篇必须 lesson 与「下一步」、收尾回填三处必做、配图校验不用 --strict；
+- 切换：单篇 → 系列（用户说「继续写下一篇 / 扩成系列」）时补建系列规划.md 与素材库.md，已有文章补 lesson 与「下一步」，转为系列第 1 篇继续；系列 → 单篇按单篇收尾。
 
 ## 这个技能是干什么的
 
@@ -22,7 +36,7 @@ description: 从零基础起步的系列教程（学习路径）写作技能。�
 3. **写完必验**：作者按文中流程完整走一遍，再找一位真正的目标读者试读，卡点原话写进 Q&A。
 4. **整篇一次跑完（回合纪律）**：用户要求写某一篇时，从取材到成文必须一次完成，中间不结束回合。取材（web search）结束不是停止点——搜索完立即继续写作；素材不齐就继续补搜，不要停下来问用户或只汇报进度。同一回合尽量推进到「转 HTML」（发布按需）；每完成一个里程碑（取材、封面、正文、配图、校验、回填、HTML）发一条简短的 commentary 更新即可，阶段性汇报不等于最终回复。
 
-## 七步流程
+## 系列模式：七步流程
 
 ### 第一步：取材与分析（web search 强制）
 
@@ -95,6 +109,7 @@ python scripts/publish-wechat.py --input "01-数学竞赛是什么.md"
 ```
 
 - 流程：获取 access_token → 上传正文图片（/media/uploadimg）→ 上传封面（thumb 素材）→ 创建草稿（/draft/add）；
+- 标题来源：草稿 `title` 默认取文章 frontmatter 的 `title`（可用 `--title` 覆盖），摘要默认取 frontmatter `subtitle`（可用 `--digest` 覆盖）；
 - 封面优先级：`--cover` > frontmatter `cover` > 文章第一张图；
 - 缺图守卫：正文图上传失败默认中止，`--allow-missing-images` 才继续；
 - 发布前必跑 `--dry-run` 核对账号、标题、图片清单；
@@ -138,7 +153,7 @@ python scripts/update-wechat-draft.py --media-id <id> --title "新标题" --dige
 
 ## 配图方案
 
-每篇至少一张示意图或截图。系列封面、章节头图这类「批量但统一」的图，推荐用**模板化配图**：HTML/CSS 模板 + 无头浏览器截图，把标题、分类、标签自动渲染成统一风格的图——零生成成本、品牌一致、完全可控。这是**通用 HTML→PNG 引擎**（[scripts/cover-generator/generate.mjs](scripts/cover-generator/generate.mjs)）：封面用 `--style`，文章里的知识卡/示意图等正文配图用 `--template` + `--set` 任意占位符。Obsidian 里可配合 Templater 在新笔记创建时自动出图。
+每篇至少一张示意图或截图。系列封面、章节头图这类「批量但统一」的图，推荐用**模板化配图**：HTML/CSS 模板 + 无头浏览器截图，把标题、分类、标签自动渲染成统一风格的图——零生成成本、品牌一致、完全可控。这是**通用 HTML→PNG 引擎**（[scripts/cover-generator/generate.mjs](scripts/cover-generator/generate.mjs)）：封面用 `--style`，文章里的知识卡/示意图等正文配图用 `--template` + `--set` 任意占位符。Obsidian 里可配合 Templater 在新笔记创建时自动出图。封面生成支持 `--input` 直接传文章 .md：标题/副标题/期号/分类/系列/风格缺省取文章 frontmatter（命令行显式参数优先），保证封面 title 与文章 header 的 `title` 一致，无需手动抄标题。
 
 所有配图按统一目录存放（封面 `assets/cover-NN.png`、每课正文图 `assets/NN/` 一课一目录），正文引用与文件一一对应。**每篇系列文章必须同时有封面图和正文配图（至少各一张），缺封面或缺正文图都视为未完成**——发布前运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图。正文配图可用内置 figures 模板（card-flow / card-list / card-compare / card-knowledge）生成。方案、脚本、存放与锚点规范见 [references/images.md](references/images.md) 与 [scripts/cover-generator/](scripts/cover-generator/)。
 
