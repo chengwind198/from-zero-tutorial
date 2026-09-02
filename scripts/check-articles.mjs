@@ -10,16 +10,26 @@
  *   2. 至少有一张图（frontmatter cover 或正文图片引用，缺图归 check-images.mjs 管，这里只提示）。
  *
  * 全部通过退出码 0；存在字数不足或超长退出码 1。
+ *
+ * --strict：对扫描到的所有 .md 强制字数检查（用于单篇模式，单篇文章 frontmatter
+ *           无 lesson）；不带时仅带 lesson 的系列文章强制（默认）。
  */
 import fs from 'node:fs';
 import path from 'node:path';
+
+// 只做开关、不吞下一个参数的布尔标志
+const BOOLEAN_FLAGS = new Set(['strict']);
 
 function parseArgs(argv) {
   const args = {};
   for (let i = 2; i < argv.length; i++) {
     const key = argv[i].replace(/^--/, '');
     if (key === argv[i]) continue;
-    args[key] = argv[++i];
+    if (BOOLEAN_FLAGS.has(key)) {
+      args[key] = true;
+    } else {
+      args[key] = argv[++i];
+    }
   }
   return args;
 }
@@ -69,10 +79,11 @@ async function main() {
 
   const issues = [];
   let checked = 0;
+  const strict = Boolean(args.strict);
   for (const md of walk(root)) {
     if (!md.toLowerCase().endsWith('.md')) continue;
     const content = fs.readFileSync(md, 'utf8');
-    if (frontmatterLesson(content) === null) continue;
+    if (!strict && frontmatterLesson(content) === null) continue; // 非系列文章不强制；--strict 时全部强制（单篇模式）
     checked++;
     const len = [...bodyText(content)].length;
     if (len < min) {
