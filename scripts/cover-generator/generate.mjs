@@ -5,6 +5,8 @@
  * 用法示例：
  *   node generate.mjs --series "高中数学竞赛零基础入门" --lesson 00 --title "这个系列怎么学"
  *     --subtitle "一条不赌天赋的路线图" --category "开篇" --out "assets/cover-00.png"
+ *   node generate.mjs --input "01-数学竞赛是什么.md" --out "assets/cover-01.png"
+ *     （标题/副标题/期号/分类/系列/风格缺省从文章 frontmatter 读取；命令行显式参数优先）
  *
  * 通用 HTML→PNG 引擎：封面与文章配图（知识卡、示意卡等）共用。
  *
@@ -98,6 +100,45 @@ function parseArgs(argv) {
   }
   args._sets = sets;
   return args;
+}
+
+function loadFrontmatter(mdPath) {
+  /* 读取 Markdown 文章 frontmatter（YAML 头）的常用单值字段。
+     只做极简解析：title/subtitle/lesson/category/series/style 等 key: value 行，
+     支持引号包裹与数组取首项（如 category: [开篇, 数学]）；解析失败返回空对象。 */
+  let text;
+  try {
+    text = fs.readFileSync(mdPath, 'utf8');
+  } catch (err) {
+    console.error(`[警告] 读取文章失败：${mdPath}（${err.message}）`);
+    return {};
+  }
+  const m = text.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*(?:\r?\n|$)/);
+  if (!m) return {};
+  const fm = {};
+  for (const line of m[1].split(/\r?\n/)) {
+    const kv = line.match(/^([A-Za-z_][A-Za-z0-9_-]*)\s*:\s*(.*?)\s*$/);
+    if (!kv) continue;
+    let val = kv[2].trim();
+    if (
+      val.length >= 2 &&
+      ((val.startsWith('"') && val.endsWith('"')) ||
+        (val.startsWith("'") && val.endsWith("'")))
+    ) {
+      val = val.slice(1, -1);
+    }
+    if (val.startsWith('[') && val.endsWith(']')) {
+      const items = val
+        .slice(1, -1)
+        .split(',')
+        .map((s) => s.trim().replace(/^["']|["']$/g, ''))
+        .filter(Boolean);
+      val = items[0] || '';
+    }
+    if (val === 'null' || val === '~') val = '';
+    fm[kv[1]] = val;
+  }
+  return fm;
 }
 
 function titleSize(title) {
@@ -211,21 +252,42 @@ function screenshotWithBrowser(browser, htmlPath, args, out) {
 
 function main() {
   const args = parseArgs(process.argv);
+  const input = args.input || args.md || '';
+  const fm = input ? loadFrontmatter(path.resolve(input)) : {};
   const localDate = () => {
     const d = new Date();
     const p = (n) => String(n).padStart(2, '0');
     return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
   };
+  // 取值顺序：命令行显式参数 > 文章 frontmatter > 内置默认
+  const resolved = {
+    series: args.series || fm.series || '',
+    lesson: args.lesson ?? fm.lesson ?? '',
+    title: args.title || fm.title || '',
+    subtitle: args.subtitle || fm.subtitle || '',
+    category: args.category || fm.category || '',
+  };
+  let style = args.style || fm.style || '';
+  let styleNote = '';
+  if (!style) {
+    if (args.auto) {
+      style = autoRoute(resolved);
+      styleNote = '关键词自动路由';
+    } else {
+      style = randomStyle();
+      styleNote = '随机匹配';
+    }
+  }
   const options = {
-    style: args.style || (args.auto ? autoRoute(args) : randomStyle()),
+    style,
     template: args.template || null,
-    series: args.series || '',
-    lesson: String(args.lesson ?? '').padStart(2, '0'),
-    title: args.title || '未命名标题',
-    subtitle: args.subtitle || '',
-    category: args.category || '',
+    series: resolved.series,
+    lesson: String(resolved.lesson).padStart(2, '0'),
+    title: resolved.title || '未命名标题',
+    subtitle: resolved.subtitle,
+    category: resolved.category,
     tag: args.tag || '',
-    footer: args.footer || (args.series ? `${args.series} · 系列教程` : ''),
+    footer: args.footer || (resolved.series ? `${resolved.series} · 系列教程` : ''),
     date: args.date || localDate(),
     width: Number(args.width || 1200),
     height: Number(args.height || 630),
@@ -235,10 +297,16 @@ function main() {
   const out = path.resolve(args.out || 'cover.png');
   // 统一先建输出目录：Playwright 截图不会自动创建父目录，与浏览器 fallback 保持一致
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  if (args.auto && !args.style) {
-    console.log(`[路由] 未指定 --style，关键词自动路由 → ${options.style}`);
-  } else if (!args.style) {
-    console.log(`[路由] 未指定 --style，随机匹配 → ${options.style}`);
+  if (input) {
+    const source = args.title ? '命令行 --title' : fm.title ? 'frontmatter title' : '默认值';
+    console.log(`[输入] 从 ${path.resolve(input)} 读取 frontmatter（title 来源：${source}）`);
+  }
+  if (args.style) {
+    // 显式指定风格，无需提示
+  } else if (fm.style) {
+    console.log(`[路由] 未指定 --style，使用 frontmatter style → ${options.style}`);
+  } else {
+    console.log(`[路由] 未指定 --style，${styleNote} → ${options.style}`);
   }
 
   const html = renderTemplate(options);

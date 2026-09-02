@@ -2,6 +2,8 @@
 
 把下面的 `obsidian-cover.js` 保存到 Templater 设置里指定的 Scripts folder（例如 vault 的 `90 - tools/templater-scripts`），然后在笔记模板中调用：
 
+> 补充：`generate.mjs` 本身已支持 `--input <md>` 直接读取文章 frontmatter（title/subtitle/lesson/category/series/style，命令行显式参数优先），命令行调用无需再手动抄标题；Templater 方案保留显式传参，便于在 Obsidian 内自动回写 `cover` 字段。
+
 ```text
 <% tp.user.obsidian_cover(tp) %>
 ```

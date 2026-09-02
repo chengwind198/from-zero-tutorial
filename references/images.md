@@ -28,7 +28,13 @@ HTML/CSS 模板 + 无头浏览器截图：把标题、副标题、分类、期�
 node generate.mjs --style blueprint --series "XXX 零基础入门" --lesson 05 --title "让机器人动起来" --subtitle "用手柄遥控电机，写第一个控制代码" --category "编程" --out "assets/cover-05.png"
 ```
 
-参数：`--style` 模板风格 slug（指定则按指定；不指定默认从 33 套风格里随机选一套）、`--random` 随机选风格（默认行为，可省略）、`--auto` 关键词自动路由（可选，显式传入才启用）、`--template` 直接指定任意 HTML 模板文件（优先级高于 --style，用于文章配图）、`--series` 系列名、`--lesson` 期号、`--title` 标题、`--subtitle` 副标题、`--category` 分类标签、`--tag` 角标标签（对应 `{{TAG}}`，正文卡右上角常用）、`--footer` 底部文字（对应 `{{FOOTER}}`/`{{FOOT}}`，默认「系列名 · 系列教程」）、`--set key=value` 设置任意扩展占位符（可重复）、`--out` 输出路径（默认 cover.png）；`--width`/`--height` 默认 1200×630；`--scale` 默认 2（2 倍高清）。脚本渲染后会自动警告未替换的占位符（如 `{{TAG}}`），出图前留意该警告。
+参数：`--input <md>` 文章 Markdown 路径（可选，别名 `--md`）：缺省读取 frontmatter 的 `title`/`subtitle`/`lesson`/`category`/`series`/`style` 作默认值，**封面 title 即文章 header 里的 `title`**；命令行显式参数优先（`--title` 等仍可覆盖），frontmatter 有 `style` 时优先用该风格（否则默认随机/`--auto` 路由）、`--style` 模板风格 slug（指定则按指定；不指定默认从 33 套风格里随机选一套）、`--random` 随机选风格（默认行为，可省略）、`--auto` 关键词自动路由（可选，显式传入才启用）、`--template` 直接指定任意 HTML 模板文件（优先级高于 --style，用于文章配图）、`--series` 系列名、`--lesson` 期号、`--title` 标题、`--subtitle` 副标题、`--category` 分类标签、`--tag` 角标标签（对应 `{{TAG}}`，正文卡右上角常用）、`--footer` 底部文字（对应 `{{FOOTER}}`/`{{FOOT}}`，默认「系列名 · 系列教程」）、`--set key=value` 设置任意扩展占位符（可重复）、`--out` 输出路径（默认 cover.png）；`--width`/`--height` 默认 1200×630；`--scale` 默认 2（2 倍高清）。脚本渲染后会自动警告未替换的占位符（如 `{{TAG}}`），出图前留意该警告。
+
+直接传文章生成封面的最简写法（标题等自动取自 frontmatter）：
+
+```powershell
+node generate.mjs --input "01-数学竞赛是什么.md" --out "assets/cover-01.png"
+```
 
 ### 生成文章配图（非封面）
 
