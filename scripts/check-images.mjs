@@ -17,16 +17,26 @@
  *   - frontmatter 封面登记：cover: assets/cover-NN.png
  *
  * 全部通过退出码 0；存在断链、未用图或缺图退出码 1。
+ *
+ * --strict：对扫描到的所有 .md 强制缺封面/缺正文图检查（用于单篇模式，
+ *           单篇文章 frontmatter 无 lesson）；不带时仅带 lesson 的系列文章强制（默认）。
  */
 import fs from 'node:fs';
 import path from 'node:path';
+
+// 只做开关、不吞下一个参数的布尔标志
+const BOOLEAN_FLAGS = new Set(['strict']);
 
 function parseArgs(argv) {
   const args = {};
   for (let i = 2; i < argv.length; i++) {
     const key = argv[i].replace(/^--/, '');
     if (key === argv[i]) continue;
-    args[key] = argv[++i];
+    if (BOOLEAN_FLAGS.has(key)) {
+      args[key] = true;
+    } else {
+      args[key] = argv[++i];
+    }
   }
   return args;
 }
@@ -104,16 +114,20 @@ async function main() {
   const mdFiles = allFiles.filter((f) => f.toLowerCase().endsWith('.md'));
   const missingCover = [];
   const missingBodyImage = [];
+  const strict = Boolean(args.strict);
   for (const md of mdFiles) {
     const content = fs.readFileSync(md, 'utf8').replace(/\r\n/g, '\n');
-    if (frontmatterLesson(content) === null) continue; // 非系列文章（规划/素材库等）不强制配图
+    if (!strict && frontmatterLesson(content) === null) continue; // 非系列文章不强制配图；--strict 时全部强制（单篇模式）
     const cover = frontmatterCover(content);
     if (!cover) {
       missingCover.push(md);
-      continue;
+      if (!strict) continue; // 系列模式保持现状：缺封面时不再额外检查缺正文图
     }
-    if (bodyImageRefs(content, path.basename(cover).toLowerCase()).length === 0) {
-      missingBodyImage.push(md);
+    if (cover || strict) {
+      const coverBase = cover ? path.basename(cover).toLowerCase() : null;
+      if (bodyImageRefs(content, coverBase).length === 0) {
+        missingBodyImage.push(md);
+      }
     }
   }
   const imageFiles = allFiles.filter((f) => IMG_EXT.test(f));
