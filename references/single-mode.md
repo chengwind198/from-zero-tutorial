@@ -34,7 +34,7 @@ web search 只针对本文主题；关键数据双源核实（至少两个独立
 ### 5. 验证与收尾
 
 1. `node scripts/check-images.mjs --root "<文章目录>" --strict` —— 必须 0 断链、0 未用图、0 缺封面、0 缺正文图；
-2. `node scripts/check-articles.mjs --root "<文章目录>"` —— 字数 3500–8000；
+2. `node scripts/check-articles.mjs --root "<文章目录>" --strict` —— 字数 3500–8000；
 3. `python scripts/md-to-html.py --input "<文章.md>"` —— 微信兼容 HTML，无 `{{...}}` 残留；
 4. `python scripts/publish-wechat.py --input "<文章.md>" --dry-run` —— 核对账号/标题/图片清单；正式发布必须先得到用户确认；
 5. 图片锚点回填：文章位于已有系列目录内 → 并入该系列素材库.md 对应条目（封面/正文图文件名 + 锚点说明，写法同系列 17–20 课）；完全独立的单篇 → 可在「参考」前加可选「配图登记」小节，不想落盘则写进对话；
@@ -49,4 +49,5 @@ web search 只针对本文主题；关键数据双源核实（至少两个独立
 | 系列规划.md / 素材库.md | 必建 | 不建 |
 | 回填 | 进度表 + 合集 + 素材库三处必做 | 仅图片锚点登记（系列目录内必做，独立单篇可选） |
 | 配图校验 | check-images.mjs（默认） | check-images.mjs --strict |
+| 字数校验 | check-articles.mjs（默认，仅带 lesson） | check-articles.mjs --strict |
 | 升级为系列 | — | 补建规划.md + 素材库.md + lesson + 「下一步」后继续 |

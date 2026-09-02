@@ -168,3 +168,10 @@ style: <封面生成后回填 slug>
 - 不新增单篇专属特性（短文模板、反 AI 检测、一键分发等）；
 - 不改发布脚本、md-to-html.py、generate.mjs 的行为；
 - 不迁移/重排 SKILL.md 现有的系列七步正文（原位标注，降低回归风险）。
+
+
+## 13. 执行期修订记录（v4）
+
+- 2026-09-02：端到端验证发现原「其余脚本零改动（check-articles 默认 3500–8000 即满足单篇要求）」不成立——check-articles.mjs 默认只扫描 frontmatter 带 lesson 的文章，无 lesson 的单篇会以 0 篇恒通过，字数强制（决策 1）落空。
+- 修订：为 scripts/check-articles.mjs 增加 `--strict`（与 check-images --strict 同型：只做开关、不吞参数；带时对所有 .md 强制字数检查，不带时行为不变），单篇模式第 5 步改为 `check-articles.mjs --strict`。
+- 受影响文件：scripts/check-articles.mjs（代码）、references/single-mode.md（第 5 步命令与差异速查表）、SKILL.md（执行纪律行）；第 3 节矩阵「厚度校验」行随之由「同左 共享」修正为「共享脚本，参数隔离」。

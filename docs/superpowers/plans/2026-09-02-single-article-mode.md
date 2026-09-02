@@ -516,3 +516,8 @@ Expected: 本计划各 Task 的 commit 依次出现，且未覆盖上一轮 gene
 - [ ] **Step 3: 最终状态说明**
 
 输出最终报告：改动文件清单、--strict 用法、单篇模式入口位置、系列回归结果。
+
+
+## 执行期修订记录
+
+- 2026-09-02：Task 6 验证发现 check-articles.mjs 默认只校验带 lesson 文章（样本 0 篇恒通过），与 Task 6 Step 3 预期不符。修订：check-articles.mjs 增加 `--strict`（同 check-images 模式），references/single-mode.md 第 5 步与 SKILL.md 执行纪律改用 `--strict`；spec 追加 v4 修订记录。Task 6 Step 3 的 check-articles 断言改为：默认 `[OK] 0 篇`（行为不变）；`--strict` 时样本 `字数不足：36 字` 退出码 1。

@@ -15,7 +15,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 
 ### 执行纪律（防串模式）
 
-- 单篇模式：不建系列规划.md、不建素材库.md、frontmatter 不写 lesson、正文不写「下一步」、收尾不回填三处、配图校验用 `check-images.mjs --strict`；
+- 单篇模式：不建系列规划.md、不建素材库.md、frontmatter 不写 lesson、正文不写「下一步」、收尾不回填三处、配图/字数校验用 `check-images.mjs --strict` 与 `check-articles.mjs --strict`；
 - 系列模式：每篇必须 lesson 与「下一步」、收尾回填三处必做、配图校验不用 --strict；
 - 切换：单篇 → 系列（用户说「继续写下一篇 / 扩成系列」）时补建系列规划.md 与素材库.md，已有文章补 lesson 与「下一步」，转为系列第 1 篇继续；系列 → 单篇按单篇收尾。
 
