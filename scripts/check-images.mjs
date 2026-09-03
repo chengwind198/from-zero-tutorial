@@ -5,11 +5,13 @@
  * 在系列目录下运行：
  *   node <skill 路径>/scripts/check-images.mjs --root "<系列目录>"
  *
- * 检查四项：
+ * 检查五项：
  *   1. 正向：正文每个图片引用都能找到对应文件（断链检查）
  *   2. 反向：assets/ 下每个图片文件至少被引用一次（未用图检查）
  *   3. 缺封面：每篇带 lesson 的系列文章必须配置 frontmatter cover
  *   4. 缺正文图：每篇带 lesson 的文章正文（frontmatter 之外）必须至少引用一张非封面的图
+ *   5. 缺小节图：正文每个一级小节（## 标题）必须至少引用一张非封面图；
+ *      本节难点/要点速记/动手任务/完成标志/常见问题 Q&A/参考/下一步/延伸阅读/配图登记等辅助小节不计入
  *
  * 支持三种引用形式：
  *   - Markdown 图片语法：![说明](assets/NN/05-01.png)
@@ -18,7 +20,7 @@
  *
  * 全部通过退出码 0；存在断链、未用图或缺图退出码 1。
  *
- * --strict：对扫描到的所有 .md 强制缺封面/缺正文图检查（用于单篇模式，
+ * --strict：对扫描到的所有 .md 强制缺封面/缺正文图/缺小节图检查（用于单篇模式，
  *           单篇文章 frontmatter 无 lesson）；不带时仅带 lesson 的系列文章强制（默认）。
  */
 import fs from 'node:fs';
@@ -102,6 +104,48 @@ function bodyImageRefs(content, coverBase) {
   return refs;
 }
 
+/**
+ * 每个正文一级小节（## 标题）是否至少引用一张非封面配图。
+ * 辅助/收尾小节（本节难点/要点速记/动手任务/完成标志/常见问题 Q&A/参考/下一步/延伸阅读/配图登记）不计入。
+ */
+const SECTION_SKIP_RE = /^(本节难点|要点速记|动手任务|完成标志|常见问题|Q&A|参考|下一步|延伸阅读|配图登记|附录)/;
+
+function missingSectionFigures(content, coverBase) {
+  content = content.replace(/\r\n/g, '\n');
+  const fm = content.match(/^---\n[\s\S]*?\n---\n?/);
+  const body = fm ? content.slice(fm[0].length) : content;
+  const parts = body.split(/^##\s+(.+)$/m);
+  const missing = [];
+  for (let i = 1; i < parts.length; i += 2) {
+    const heading = (parts[i] || '').trim();
+    if (SECTION_SKIP_RE.test(heading)) continue;
+    const seg = parts[i + 1] || '';
+    let has = false;
+    let r;
+    IMG_RE.lastIndex = 0;
+    while ((r = IMG_RE.exec(seg)) !== null) {
+      const raw = r[1].trim();
+      if (!raw || raw.startsWith('http://') || raw.startsWith('https://') || raw.startsWith('data:')) continue;
+      const clean = raw.split(/\s+/)[0].replace(/["']$/, '');
+      if (coverBase && path.basename(clean).toLowerCase() === coverBase) continue;
+      has = true;
+      break;
+    }
+    if (!has) {
+      WIKI_IMG_RE.lastIndex = 0;
+      while ((r = WIKI_IMG_RE.exec(seg)) !== null) {
+        const raw = r[1].trim();
+        if (!IMG_EXT.test(raw)) continue;
+        if (coverBase && raw.toLowerCase() === coverBase) continue;
+        has = true;
+        break;
+      }
+    }
+    if (!has) missing.push(heading);
+  }
+  return missing;
+}
+
 async function main() {
   const args = parseArgs(process.argv);
   const root = path.resolve(args.root || '.');
@@ -114,6 +158,7 @@ async function main() {
   const mdFiles = allFiles.filter((f) => f.toLowerCase().endsWith('.md'));
   const missingCover = [];
   const missingBodyImage = [];
+  const missingSectionImages = [];
   const strict = Boolean(args.strict);
   for (const md of mdFiles) {
     const content = fs.readFileSync(md, 'utf8').replace(/\r\n/g, '\n');
@@ -127,6 +172,9 @@ async function main() {
       const coverBase = cover ? path.basename(cover).toLowerCase() : null;
       if (bodyImageRefs(content, coverBase).length === 0) {
         missingBodyImage.push(md);
+      }
+      for (const heading of missingSectionFigures(content, coverBase)) {
+        missingSectionImages.push({ file: md, heading });
       }
     }
   }
@@ -183,9 +231,9 @@ async function main() {
   }
   const unused = imageFiles.filter((f) => !usedKeys.has(normalize(f)));
 
-  const problems = broken.length + unused.length + missingCover.length + missingBodyImage.length;
+  const problems = broken.length + unused.length + missingCover.length + missingBodyImage.length + missingSectionImages.length;
   if (problems === 0) {
-    console.log(`[OK] 配图检查通过：${refs.length} 处引用，${imageFiles.length} 个图片文件，无断链、无未用图、无缺封面、无缺正文图。`);
+    console.log(`[OK] 配图检查通过：${refs.length} 处引用，${imageFiles.length} 个图片文件，无断链、无未用图、无缺封面、无缺正文图、无缺小节图。`);
     return;
   }
   for (const b of broken) {
@@ -200,7 +248,10 @@ async function main() {
   for (const mb of missingBodyImage) {
     console.log(`[缺正文图] ${path.relative(root, mb)}`);
   }
-  console.log(`[结果] 共 ${problems} 个问题（断链 ${broken.length}、未用图 ${unused.length}、缺封面 ${missingCover.length}、缺正文图 ${missingBodyImage.length}）。`);
+  for (const ms of missingSectionImages) {
+    console.log(`[缺小节图] ${path.relative(root, ms.file)} → 「${ms.heading}」`);
+  }
+  console.log(`[结果] 共 ${problems} 个问题（断链 ${broken.length}、未用图 ${unused.length}、缺封面 ${missingCover.length}、缺正文图 ${missingBodyImage.length}、缺小节图 ${missingSectionImages.length}）。`);
   process.exit(1);
 }
 

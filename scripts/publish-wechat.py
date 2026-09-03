@@ -58,7 +58,7 @@ DEFAULT_CONFIG = SKILL_ROOT / "config.yaml"
 RECORDS_FILE = SKILL_ROOT / "draft-records.json"
 API_BASE = "https://api.weixin.qq.com/cgi-bin"
 _IMG_RE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
-_IMG_SRC_RE = re.compile(r"<img[^>]+src=\"([^\"]+)\"")
+_IMG_SRC_RE = re.compile(r"(<img[^>]*?src=\")([^\"]+)(\")")
 
 
 class PublishError(Exception):
@@ -182,7 +182,7 @@ def extract_local_images(md_text, base_dir):
     """从 md 提取本地图片路径（去重、保留顺序、排除 http）。"""
     seen, result = set(), []
     for m in _IMG_RE.finditer(md_text):
-        src = m.group(1).strip()
+        src = m.group(2).strip()
         if src.startswith(("http://", "https://", "data:")):
             continue
         p = Path(src)
@@ -251,12 +251,12 @@ def replace_image_srcs(html_text, mapping):
         norm[key] = url
 
     def repl(m):
-        src = m.group(1).strip()
+        src = m.group(2).strip()
         key = src.replace("\\", "/")
         while key.startswith("./"):
             key = key[2:]
         url = norm.get(key)
-        return f'"{url}"' if url else m.group(0)
+        return m.group(1) + (url if url else src) + m.group(3)
 
     return _IMG_SRC_RE.sub(repl, html_text)
 
@@ -359,7 +359,7 @@ def main():
         local_images = extract_local_images(md_path.read_text(encoding="utf-8"), base_dir)
     else:
         for m in _IMG_SRC_RE.finditer(content):
-            src = m.group(1)
+            src = m.group(2)
             if src.startswith(("http://", "https://", "data:")):
                 continue
             p = Path(src)

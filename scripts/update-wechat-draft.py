@@ -59,7 +59,7 @@ _spec.loader.exec_module(pw)
 
 
 UNICODE_ESC = re.compile(r"(?<!\\)\\u([0-9a-fA-F]{4})")
-_IMG_SRC_RE = re.compile(r"<img[^>]+src=\"([^\"]+)\"")
+_IMG_SRC_RE = re.compile(r"(<img[^>]*?src=\")([^\"]+)(\")")
 
 
 def decode_unicode_escapes(text):
@@ -137,7 +137,7 @@ def collect_local_srcs(content):
     """收集正文 HTML 中引用的本地图片路径（相对 base_dir 解析）。"""
     result = []
     for m in _IMG_SRC_RE.finditer(content):
-        src = m.group(1).strip()
+        src = m.group(2).strip()
         if src.startswith(("http://", "https://", "data:")):
             continue
         result.append(src)

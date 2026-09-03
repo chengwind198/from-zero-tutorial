@@ -75,7 +75,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 ### 第五步：验证与回填
 
 - 作者按文中流程完整走一遍：命令可执行、步骤不迷路、截图与版本一致；
-- 配图强制：每篇（frontmatter 带 lesson 的文章）必须同时有封面图和正文配图（至少各一张），运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图；缺任一视为未完成；
+- 配图强制：封面 1 张 + 正文每个一级小节（## 标题）至少 1 张非封面配图（同一张图不跨小节复用），运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图、0 缺小节图；缺任一视为未完成；
 - 内容厚度：每篇正文 3500-8000 字，运行 [scripts/check-articles.mjs](scripts/check-articles.mjs) 验证；字数不足或超长视为未完成；
 - 目标读者试读，卡点原话写进 Q&A；
 - 回填三处：规划进度表、系列合集/索引、素材库；漏回填视为未完成。
@@ -94,7 +94,7 @@ python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refin
 ```
 
 - 主题选择：`--theme <slug>` 指定（themes/*.json 共 15 套）；未指定随机选一套；
-- 转 HTML 参数全部走命令行：`--theme` / `--html-dir`（默认 html）/ `--mermaid-cmd`（默认 mmdc），config.yaml 只管公众号发布；
+- 转 HTML 参数全部走命令行：`--theme` / `--html-dir`（缺省与 Markdown 同目录，便于 assets 图片相对路径解析；发布/更新草稿流程会显式使用 html/ 子目录）/ `--mermaid-cmd`（默认 mmdc），config.yaml 只管公众号发布；
 - Mermaid 必须渲染成 PNG（`--mermaid-cmd mmdc`）；找不到渲染命令时转 HTML 会保留源码占位并警告，发布会中止；
 - 转完检查：HTML 无 `{{...}}` 残留、无断图、正文图与封面引用完整（图片仍是本地相对路径，发布时上传替换）；
 - 状态自动回写：转 HTML 成功后，文章 frontmatter 的 `status` 会自动追加「已生成html」。
@@ -153,9 +153,9 @@ python scripts/update-wechat-draft.py --media-id <id> --title "新标题" --dige
 
 ## 配图方案
 
-每篇至少一张示意图或截图。系列封面、章节头图这类「批量但统一」的图，推荐用**模板化配图**：HTML/CSS 模板 + 无头浏览器截图，把标题、分类、标签自动渲染成统一风格的图——零生成成本、品牌一致、完全可控。这是**通用 HTML→PNG 引擎**（[scripts/cover-generator/generate.mjs](scripts/cover-generator/generate.mjs)）：封面用 `--style`，文章里的知识卡/示意图等正文配图用 `--template` + `--set` 任意占位符。Obsidian 里可配合 Templater 在新笔记创建时自动出图。封面生成支持 `--input` 直接传文章 .md：标题/副标题/期号/分类/系列/风格缺省取文章 frontmatter（命令行显式参数优先），保证封面 title 与文章 header 的 `title` 一致，无需手动抄标题。
+**配图强制（2026-09-03 起）**：每篇必须有封面 1 张，且正文每个一级小节（## 标题）至少 1 张非封面配图（同一张图不跨小节复用；「本节难点/要点速记/动手任务/完成标志/常见问题 Q&A/参考/下一步/延伸阅读/配图登记」等辅助或收尾小节不计）。系列封面、章节头图这类「批量但统一」的图，推荐用**模板化配图**：HTML/CSS 模板 + 无头浏览器截图，把标题、分类、标签自动渲染成统一风格的图——零生成成本、品牌一致、完全可控。这是**通用 HTML→PNG 引擎**（[scripts/cover-generator/generate.mjs](scripts/cover-generator/generate.mjs)）：封面用 `--style`，文章里的知识卡/示意图等正文配图用 `--template` + `--set` 任意占位符。Obsidian 里可配合 Templater 在新笔记创建时自动出图。封面生成支持 `--input` 直接传文章 .md：标题/副标题/期号/分类/系列/风格缺省取文章 frontmatter（命令行显式参数优先），保证封面 title 与文章 header 的 `title` 一致，无需手动抄标题。
 
-所有配图按统一目录存放（封面 `assets/cover-NN.png`、每课正文图 `assets/NN/` 一课一目录），正文引用与文件一一对应。**每篇系列文章必须同时有封面图和正文配图（至少各一张），缺封面或缺正文图都视为未完成**——发布前运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图。正文配图可用内置 figures 模板（card-flow / card-list / card-compare / card-knowledge）生成。方案、脚本、存放与锚点规范见 [references/images.md](references/images.md) 与 [scripts/cover-generator/](scripts/cover-generator/)。
+所有配图按统一目录存放（封面 `assets/cover-NN.png`、每课正文图 `assets/NN/` 一课一目录），正文引用与文件一一对应。**每篇文章必须同时有封面图，且正文每个一级小节至少一张非封面配图；缺封面、缺正文图或缺任一正文小节的图都视为未完成**——发布前运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图、0 缺小节图。正文配图可用内置 figures 模板（card-flow / card-list / card-compare / card-knowledge）生成。方案、脚本、存放与锚点规范见 [references/images.md](references/images.md) 与 [scripts/cover-generator/](scripts/cover-generator/)。
 
 **公众号封面尺寸（硬性）**：微信头条封面按 2.35:1 裁切（上传建议 1068×455，展示 900×383）。作为公众号发布用途的封面必须按 2.35:1 生成（`generate.mjs --width 1068 --height 455`），否则微信会裁掉左右边缘、文字可能被截；`publish-wechat.py` 发布前会检查封面宽高比，偏离 2.35:1 会警告或中止。1200×630 仅用于知识库头图与正文图，不能直接当公众号封面上传。详见 [references/images.md](references/images.md) 的「封面尺寸」一节。
 
@@ -182,6 +182,6 @@ python scripts/update-wechat-draft.py --media-id <id> --title "新标题" --dige
 | [draft-records.example.json](draft-records.example.json) / [draft-records.json](draft-records.json) | 草稿记录（media_id、标题、摘要、封面、图片映射、相对 base_dir 的文章路径），发布后自动写入；同标题重复发布会被拦截。example 是空模板；真实记录含本机路径，不入库（.gitignore），由脚本自动创建 | 更新草稿时 |
 | [assets/templates/](assets/templates/) | 三个可直接复制的模板 | 建规划、素材库、写文章时 |
 | [scripts/cover-generator/](scripts/cover-generator/) | 封面生成脚本、HTML 模板与 Templater 示例 | 需要批量生成封面时 |
-| [scripts/check-images.mjs](scripts/check-images.mjs) | 配图一一对应核对脚本（断链/未用图/缺封面/缺正文图） | 发布前核对配图时 |
+| [scripts/check-images.mjs](scripts/check-images.mjs) | 配图一一对应核对脚本（断链/未用图/缺封面/缺正文图/缺小节图） | 发布前核对配图时 |
 | [scripts/check-articles.mjs](scripts/check-articles.mjs) | 内容厚度核对脚本（正文 3500-8000 字） | 发布前核对内容厚度时 |
 

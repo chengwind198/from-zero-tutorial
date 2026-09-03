@@ -23,21 +23,21 @@ web search 只针对本文主题；关键数据双源核实（至少两个独立
 - 规范同 references/article.md：场景开场、术语首现一句话解释、至少 1 个真实案例、至少 1 组数据表、误区澄清、延伸阅读、一稿二改去 AI 味；
 - 标题：用户给定标题（含主题关键词利于搜索）；
 - frontmatter：用 assets/templates/article-single-template.md（无 lesson）；
-- 章节结构：正文 →（操作类加「本节难点/要点速记/动手任务/完成标志/Q&A」）→ 参考 →（可选「配图登记」）；不设「下一步」。
+- 章节结构：正文 →（操作类加「本节难点/要点速记/动手任务/完成标志/Q&A」）→ 参考；不设「下一步」，也不在正文里写「配图登记」（图片锚点登记写进对话/交付说明即可）。
 
 ### 4. 配图（强制）
 
 - 封面：`node scripts/cover-generator/generate.mjs --input "<文章.md>" --width 1068 --height 455 --out "assets/<文件名>.png"`（公众号 2.35:1；title 自动取 frontmatter title）；把随机到的 style slug 回填 frontmatter `style`；
-- 正文图：至少 1 张，与封面同一 style（figures 模板或真实截图）；
+- 正文图：正文每个一级小节（## 标题）至少 1 张（同一张图不跨小节复用），与封面同一 style（figures 模板或真实截图）；「本节难点 / 要点速记 / 动手任务 / 完成标志 / 常见问题 Q&A / 参考 / 下一步 / 延伸阅读 / 配图登记」等辅助或收尾小节不计入；
 - 目录：封面与正文图都放文章目录 `assets/` 下即可（不强制 assets/NN/）。
 
 ### 5. 验证与收尾
 
-1. `node scripts/check-images.mjs --root "<文章目录>" --strict` —— 必须 0 断链、0 未用图、0 缺封面、0 缺正文图；
+1. `node scripts/check-images.mjs --root "<文章目录>" --strict` —— 必须 0 断链、0 未用图、0 缺封面、0 缺正文图、0 缺小节图；
 2. `node scripts/check-articles.mjs --root "<文章目录>" --strict` —— 字数 3500–8000；
 3. `python scripts/md-to-html.py --input "<文章.md>"` —— 微信兼容 HTML，无 `{{...}}` 残留；
 4. `python scripts/publish-wechat.py --input "<文章.md>" --dry-run` —— 核对账号/标题/图片清单；正式发布必须先得到用户确认；
-5. 图片锚点回填：文章位于已有系列目录内 → 并入该系列素材库.md 对应条目（封面/正文图文件名 + 锚点说明，写法同系列 17–20 课）；完全独立的单篇 → 可在「参考」前加可选「配图登记」小节，不想落盘则写进对话；
+5. 图片锚点回填：文章位于已有系列目录内 → 并入该系列素材库.md 对应条目（封面/正文图文件名 + 锚点说明，写法同系列 17–20 课）；完全独立的单篇 → 图片锚点登记只写进对话/交付说明，不写入文章正文；
 6. 收尾产物只应有：文章 .md、assets/ 图片、（可选）html/、（若发布）发布记录。
 
 ## 与系列模式差异速查

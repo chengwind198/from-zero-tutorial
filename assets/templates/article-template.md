@@ -1,4 +1,5 @@
 > 模板说明：章节按文章类型按需选用（见 references/article.md）。知识/介绍类只用「正文 → 参考 → 下一步」；操作/教程类才加「本节难点/要点速记 → 动手任务 → 完成标志 → Q&A」。下面的骨架是全量版，用不到的章节直接删。
+> 配图强制：封面 1 张 + 正文每个一级小节至少 1 张非封面配图（同一张图不跨小节复用），见 references/article.md。
 > 单篇模式请改用 [article-single-template.md](article-single-template.md)（无 lesson、无「下一步」）。
 
 ---

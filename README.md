@@ -1,6 +1,6 @@
-# 从零开始学 XXX（From Zero Tutorial）
+# 从零开始学 XXX - Skill（From Zero Tutorial - Skill）
 
-一个把「零基础系列教程」当作学习产品来生产的 Agent Skill：适用于 Codex、Claude Code、千问办公、CodeBuddy、Trae 等主流 AI 工具。先弄清读者和终点，再规划学习路径，再逐篇写作。每篇都能动手、有完成标志，读者跟着走完就有真实能力。
+一个把「零基础系列教程」当作学习产品来生产的 Agent Skill：适用于 Codex、Claude Code、千问办公、CodeBuddy、Trae 等主流 AI 工具。先弄清读者和终点，再规划学习路径，再逐篇写作。每篇都能动手、有完成标志，读者跟着走完就有真实能力。 技能同时支持两种模式：**系列模式**（从零规划多篇学习路径，默认主流程）与**单篇模式**（给一个标题直接成文，适合独立文章/公众号文章）。
 
 ## 目录
 
@@ -56,24 +56,27 @@
 7. **一键转成微信公众号文章**（排版适配、封面比例自动切、Mermaid 图表转图片）；
 8. **甚至帮你发布到公众号草稿箱**（防重复发布，图片自动上传复用）。
 
+只想写一篇独立文章/公众号文章？直接给标题即可（如「写一篇对比 Claude Code 和 Codex 的文章」），技能自动走**单篇模式**：取材核实 → 简短大纲 → 成文 → 封面 + 每个正文小节配图 → 校验 → 转 HTML →（可选）发布；不建系列规划/素材库，正文也不写「下一步」。
+
 全程你只需要说「开始」，中间可以随时提修改意见，其他机械活儿 AI 全干。
 
 ## 2. 它解决什么问题
 
-系列教程常见的坑：想到哪写到哪、默认读者有前置知识、只讲不练、数据编造、写完没人校验。本技能用一条强制流程把这些堵住：**取材先行 → 双源核实 → 规划路径 → 逐篇写作 → 动手验证 → 转 HTML →（可选）发布微信公众号草稿**。
+系列教程常见的坑：想到哪写到哪、默认读者有前置知识、只讲不练、数据编造、写完没人校验。本技能用一条强制流程把这些堵住：**取材先行 → 双源核实 → 规划路径 → 逐篇写作 → 动手验证 → 转 HTML →（可选）发布微信公众号草稿**。 技能会自动路由：系列请求走七步流程，单篇请求走五步流程（见 [SKILL.md](SKILL.md)）。
 
 ## 3. 核心特性
 
-- 七步流程：取材分析 → 系列规划 → 素材库 → 逐篇写作 → 验证回填 → 转 HTML → 发布微信；
+- 双模式路由：系列模式七步（取材分析 → 系列规划 → 素材库 → 逐篇写作 → 验证回填 → 转 HTML → 发布微信）；单篇模式五步（取材 → 大纲 → 写作 → 封面 + 每个正文小节配图 → 校验与收尾）；
+- 配图强制（2026-09-03 起）：封面 1 张 + 正文每个一级小节至少 1 张非封面配图，系列/单篇同规则；
 - 十条设计原则：无门槛可学、每课有完成标志、术语首现一句话解释、官方资料优先、禁止编造案例与数据；
 - 配图引擎：[scripts/cover-generator/](scripts/cover-generator/)，33 套风格的模板化封面/正文卡（HTML→PNG，Playwright 或本机 Edge/Chrome）；
-- 微信适配：15 套主题的 md→HTML 转换、Mermaid 渲染为 PNG、封面 2.35:1 比例守卫；
+- 微信适配：15 套主题的 md→HTML 转换（默认输出到文章 Markdown 同目录，图片相对路径可直接打开不破图）、Mermaid 渲染为 PNG、封面 2.35:1 比例守卫；
 - 公众号草稿发布/更新：防重复发布、UTF-8 中文原文发送、图片 CDN 复用；
-- 自动化校验：配图一一对应（0 断链 / 0 未用图 / 缺封面 / 缺正文图）、内容厚度 3500-8000 字。
+- 自动化校验：配图一一对应（0 断链 / 0 未用图 / 缺封面 / 缺正文图 / 缺小节图）、内容厚度 3500-8000 字；单篇/独立文章用 `--strict` 强制。
 
 ## 4. 配图方案（零成本优先）
 
-系列文章必须配图（封面 + 正文图），本技能默认走**零 token、零费用**的本地生成通道：
+系列/单篇文章必须配图（封面 1 张 + 正文每个一级小节至少 1 张正文图，2026-09-03 起强制），本技能默认走**零 token、零费用**的本地生成通道：
 
 ### 4.1 模板化配图（推荐）
 
@@ -158,9 +161,12 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 - **WorkBuddy**：`用 from-zero-tutorial 写「零基础入门 Excel 函数」系列：先规划学习路径，再写第一篇。`
 - **千问办公（QwenWork）**：`使用 from-zero-tutorial 技能，为「从零开始学摄影」做系列规划并写第一课。`
 
+- **Codex（单篇）**：`用 from-zero-tutorial 写一篇独立对比文章：Claude Code、Codex、dsh、WorkBuddy 怎么选？`
+- **Claude Code（单篇）**：`使用 from-zero-tutorial，给定标题直接写一篇公众号文章。`
+
 ### 7.2 执行流程
 
-触发后技能会按七步流程自动执行：web search 取材 → 系列规划 → 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需），全程无需手动分步；关键数据会做双源核实，案例与数据禁止编造。
+触发后技能按请求自动路由：**系列模式**执行 web search 取材 → 系列规划 → 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需）；**单篇模式**执行取材 → 大纲 → 写作 → 封面 + 每个正文小节配图 → 校验收尾 → 转 HTML（发布按需）。全程无需手动分步；关键数据会做双源核实，案例与数据禁止编造。
 
 ## 8. 快速开始
 
@@ -186,6 +192,8 @@ Copy-Item config.yaml.example config.yaml
 python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refined-blue
 ```
 
+HTML 默认输出到 Markdown 同目录（`<文章目录>/<文章名>.html`），图片保持相对 `assets/` 路径，直接打开不破图；需要子目录时用 `--html-dir html`（发布/更新草稿流程内部会显式使用 `html/` 子目录）。
+
 #### 8.3.2 配图与内容校验
 
 在系列目录运行：
@@ -194,6 +202,8 @@ python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refin
 node scripts/check-images.mjs --root "你的系列目录"
 node scripts/check-articles.mjs --root "你的系列目录"
 ```
+
+单篇/独立文章请加 `--strict`，会强制封面、正文每节一图与字数区间：`node scripts/check-images.mjs --root "你的单篇文章目录" --strict`、`node scripts/check-articles.mjs --root "你的单篇文章目录" --strict`（示例见 references/single-mode.md）。
 
 #### 8.3.3 发布到公众号草稿箱
 
@@ -211,7 +221,7 @@ python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
 | --- | --- |
 | [SKILL.md](SKILL.md) | 技能主文档 |
 | [references/](references/) | 规划、单篇写作、配图、发布的详细规范 |
-| [assets/templates/](assets/templates/) | 系列规划、素材库、文章模板 |
+| [assets/templates/](assets/templates/) | 系列规划、素材库、系列文章模板、单篇文章模板（article-single-template，无 lesson） |
 | [scripts/](scripts/) | md→HTML、微信发布/更新、配图与内容校验脚本 |
 | [scripts/cover-generator/](scripts/cover-generator/) | 模板化配图引擎（33 套风格 + 正文卡模板） |
 | [themes/](themes/) | 15 套微信 HTML 主题 |

@@ -412,7 +412,7 @@ def convert_fallback(text, theme_json):
 # 主流程
 # ============================================================
 
-def convert_article(md_path, out_path=None, theme_arg=None, html_dir="html",
+def convert_article(md_path, out_path=None, theme_arg=None, html_dir=None,
                     mermaid_cmd=None, for_publish=False, dry_run=False):
     """把一篇 md 转成 HTML。返回 (out_path, meta dict)。"""
     md_path = Path(md_path)
@@ -429,7 +429,12 @@ def convert_article(md_path, out_path=None, theme_arg=None, html_dir="html",
     cover = fm.get("cover") or ""
 
     if out_path is None:
-        out_path = md_path.parent / html_dir / f"{md_path.stem}.html"
+        if html_dir:
+            # 显式指定 --html-dir（如发布/更新草稿的 html/ 子目录）时按子目录输出
+            out_path = md_path.parent / html_dir / f"{md_path.stem}.html"
+        else:
+            # 默认与 Markdown 同目录：HTML 里的 assets/ 相对图片路径可直接解析
+            out_path = md_path.with_name(f"{md_path.stem}.html")
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -470,8 +475,8 @@ def convert_article(md_path, out_path=None, theme_arg=None, html_dir="html",
 def main():
     parser = argparse.ArgumentParser(description="md → 微信兼容 HTML（from-zero-tutorial）")
     parser.add_argument("--input", "-i", required=True, help="文章 Markdown 路径")
-    parser.add_argument("--out", "-o", help="输出 HTML 路径（默认 <文章目录>/html/<文章名>.html）")
-    parser.add_argument("--html-dir", default="html", help="HTML 输出目录（相对文章目录，默认 html）")
+    parser.add_argument("--out", "-o", help="输出 HTML 路径（默认与 Markdown 同目录：<文章目录>/<文章名>.html）")
+    parser.add_argument("--html-dir", default=None, help="HTML 输出目录（相对文章目录；缺省与 Markdown 同目录，assets 图片相对路径可直接解析）")
     parser.add_argument("--theme", help="主题 slug（themes/*.json）；缺省随机")
     parser.add_argument("--mermaid-cmd", default="mmdc", help="mermaid 渲染命令（默认 mmdc，找不到则保留源码占位）")
     parser.add_argument("--for-publish", action="store_true", help="发布模式：mermaid 未渲染则中止")
