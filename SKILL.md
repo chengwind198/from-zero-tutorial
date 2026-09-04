@@ -1,6 +1,6 @@
 ---
 name: from-zero-tutorial
-description: 从零基础起步的系列教程（学习路径）或单篇文章写作技能。当用户要求写「从零开始学 XXX」「零基础入门 XXX」「XXX 从入门到进阶」类系列教程、需要先规划学习路径再逐篇成文，或只给定标题写一篇独立文章/公众号文章时使用；入口自动路由系列模式与单篇模式（无法判断默认单篇）。适用于任何主题（编程、语言、乐器、理财、运动、学科知识等），不限于代码类。铁律：动手写作前必须先做 web search 收集完整材料，素材不齐不写。
+description: 从零基础起步的系列教程（学习路径）或单篇文章写作技能。当用户要求写「从零开始学 XXX」「零基础入门 XXX」「XXX 从入门到进阶」类系列教程、需要先规划学习路径再逐篇成文，或只给定标题写一篇独立文章/公众号文章（含爆款传播向公众号文）时使用；入口自动路由系列模式与单篇模式（无法判断默认单篇）。适用于任何主题（编程、语言、乐器、理财、运动、学科知识等），不限于代码类。铁律：动手写作前必须先做 web search 收集完整材料，素材不齐不写。
 ---
 
 # 从零开始学 XXX（From Zero Tutorial）
@@ -10,7 +10,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 本技能支持两种模式：**系列模式**（多篇教程，默认主流程）与**单篇模式**（给定标题写一篇文章）。收到请求先判断：
 
 - **系列模式**：请求含「系列 / 从零开始学 / 零基础入门 / 第 N 篇 / 规划 / 多篇 / 合集 / 课程 / 进阶 / 续篇」，或「先写一篇、后面做成系列」→ 走下方「系列模式：七步流程」；
-- **单篇模式**：请求含「写一篇 / 一篇文章 / 单篇 / 标题是 / 公众号文章 / 只写 XX / 独立文章」，或无法判断（默认）→ 读 [references/single-mode.md](references/single-mode.md)，按单篇五步执行；
+- **单篇模式**：请求含「写一篇 / 一篇文章 / 单篇 / 标题是 / 公众号文章 / 只写 XX / 独立文章」，或无法判断（默认）→ 读 [references/single-mode.md](references/single-mode.md)，按单篇六步执行；
 - 两套信号都出现 → 系列模式。
 
 ### 执行纪律（防串模式）
@@ -18,6 +18,25 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 - 单篇模式：不建系列规划.md、不建素材库.md、frontmatter 不写 lesson、正文不写「下一步」、收尾不回填三处、配图/字数校验用 `check-images.mjs --strict` 与 `check-articles.mjs --strict`；
 - 系列模式：每篇必须 lesson 与「下一步」、收尾回填三处必做、配图校验不用 --strict；
 - 切换：单篇 → 系列（用户说「继续写下一篇 / 扩成系列」）时补建系列规划.md 与素材库.md，已有文章补 lesson 与「下一步」，转为系列第 1 篇继续；系列 → 单篇按单篇收尾。
+
+## 输出目录约定（两种模式统一）
+
+写作产出统一放在**当前项目根目录**下的 `generated/<英文标题>/`，作为该系列或单篇文章写作的信息与素材根目录：
+
+- **英文标题 slug**：由你根据主题自拟，**全小写、字母数字与连字符组成**（如 `python-from-zero-to-master`、`claude-code-vs-codex`）；一个系列或一篇独立文章对应一个目录；
+- 系列模式目录内：`系列规划.md`、`素材库.md`、`NN-*.md`、`assets/`、`html/`（发布后）；单篇模式目录内：文章 `.md`、`assets/`、（可选）`html/` 与轻量取材记录 `素材.md`；
+- 「当前项目根目录」指用户要求写作时所在的工作目录；若用户明确指定了其它输出位置（如 Obsidian Vault 的某个笔记目录），以用户指定为准，目录内部结构约定不变；
+- 脚本从本技能根目录（SKILL.md 所在文件夹）运行，`--input` / `--root` 传 `<项目根>/generated/<英文标题>/` 的绝对路径，或从技能根目录到它的相对路径；文章内部一律用相对路径 `assets/...`，保证换目录不破图。
+
+## 写作前置确认（Workflow 门槛）
+
+新主题/新文章的首次写作，动笔前与用户对齐一次；对齐完成后默认**自动推进到成文**，不在大纲处停下等确认：
+
+1. **要素对齐**：文章主题、目标读者、核心观点（系列模式为终点能力）缺失任一项 → 先主动提问补齐（可给出默认建议让用户选），不猜着写；三要素齐备（或用户明确给了主题）即可动笔；
+2. **大纲与标题候选即写即报**：取材完成后、成文前，在对话中同步给出简短大纲（正文小节 + 配图/素材规划）与 **3 个标题候选**（系列篇目主标题格式不变，候选落在副标题钩子上；单篇/观点文直接给 3 个标题候选），随后**同一回合直接成文**，不等待用户确认；系列规划模式下先在对话中给出「系列规划.md」要点版再批量产出，同样不主动停笔等待；
+3. **一次性产出**：从取材到成文、配图、校验、回填在同一轮跑完，并把**全部输出文件一次性生成**进 `generated/<英文标题>/`；不以进度汇报结束回合（见铁律 4）。用户若在对话中随时对立场/标题/读者提出调整，按其意见修改后继续即可。
+
+> 例外：素材不齐、三要素缺失、或执行需要用户新授权的操作（如正式发布）时，才停下提问；其余环节一律自动推进。
 
 ## 这个技能是干什么的
 
@@ -32,9 +51,22 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 ## 铁律（违反即返工）
 
 1. **取材先行**：任何写作动作之前，必须先做 web search 收集完整材料——主题全景、官方/权威资料、案例数据、读者常见问题、现有内容缺口。材料不齐不写；禁止编造案例、数据、对话；无法核实的内容要么不写，要么明确标注「以官方为准」并附入口链接。
-2. **双源核实**：关键数据（规模、版本、日期、价格、事实性陈述）至少两个独立来源交叉校验，来源与核验日期登记进素材库。
+2. **双源核实 + 时效新鲜**：关键数据（规模、版本、日期、价格、事实性陈述）至少两个独立来源交叉校验，来源与核验日期登记进素材库；对时效敏感主题（模型/版本/价格/政策/产品/榜单等），检索必须以「写作当日为锚点」找最新状态，优先最近来源与官方发布页，新旧口径冲突以最新官方为准，正文与素材标注数据日期（如「截至 2026-09-04」）——过时的"当前事实"不得当现状引用，只能作为明确标注的历史对比。
 3. **写完必验**：作者按文中流程完整走一遍，再找一位真正的目标读者试读，卡点原话写进 Q&A。
-4. **整篇一次跑完（回合纪律）**：用户要求写某一篇时，从取材到成文必须一次完成，中间不结束回合。取材（web search）结束不是停止点——搜索完立即继续写作；素材不齐就继续补搜，不要停下来问用户或只汇报进度。同一回合尽量推进到「转 HTML」（发布按需）；每完成一个里程碑（取材、封面、正文、配图、校验、回填、HTML）发一条简短的 commentary 更新即可，阶段性汇报不等于最终回复。
+4. **整篇一次跑完（回合纪律）**：从取材到成文必须一次完成，中间不结束回合、不停在大纲处等确认（大纲与标题候选在对话中即写即报，随后直接成文）。「写作前置确认」的提问只发生在动笔前（三要素缺失时），属于必要对齐，不算中途停笔；取材（web search）结束不是停止点——搜索完立即继续写作；素材不齐就继续补搜，不要只汇报进度。同一回合尽量推进到「转 HTML」（发布按需）；每完成一个里程碑（取材、大纲、封面、正文、配图、校验、回填、HTML）发一条简短的 commentary 更新即可，阶段性汇报不等于最终回复。
+
+## 爆款流量密码（公开传播写作标准）
+
+面向公众号/公开传播的所有文章，在满足铁律（取材先行、双源核实、禁止编造、配图强制）的前提下叠加「传播基因」，完整规范见 [references/viral-writing.md](references/viral-writing.md)，摘要：
+
+- **标题**：悬念型 / 数字型 / 情绪型至少选一种（系列篇目主标题保持「XXX 零基础入门 · NN」便于搜索收录，钩子放副标题）；允许组合，但**禁止标题党**——正文必须兑现标题里的数字与承诺；
+- **开头（前 100 字）**：用场景化故事、反常识数据或灵魂拷问开场，直接命中读者痛点或终极利益，不铺背景；
+- **结构**：痛点共鸣 → 原因剖析 → 解决方案/观点输出 → 升华总结（黄金圈 / SCQA 变体）；
+- **节奏**：每段不超过 5 行，多用短句、断行，核心句加粗；每 300 字左右至少一个「滑动停靠点」（小标题 / 加粗金句 / 分点列表 / 配图）——公众号观点短文尽量用真实小标题，3500-8000 字长教程按知识小节组织、节内用停靠点保证密度（配图强制仍按「每个 ## 小节一张图」执行，不因切小标题翻倍配图）；
+- **金句**：每 500 字至少一句可截图分享的金句——朗朗上口、带立场、不正确的废话不算；
+- **结尾**：必须有行动号召（点赞/在看/留言/转发）与一个具体互动话题；
+- **证据**：每篇至少 1 个真实案例或亲历故事 + 一组具体数字/对比（双源核实，禁止编造）；
+- **语气**：亲切、犀利、真诚，避免说教，口语化但逻辑严密；适当用第二人称「你」增强代入。
 
 ## 系列模式：七步流程
 
@@ -43,7 +75,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 先检索，后判断：
 
 - 用 web search 摸清主题全景：这个领域是什么、官方/权威资料在哪、主流学习路径、常见误区、中文/本地可用资源、现有教程缺什么；
-- 关键事实与数据双源核实，连同来源链接、核验日期一起记入素材库；
+- 关键事实与数据双源核实，连同来源链接、核验日期一起记入素材库；时效敏感主题先锚定「截至写作日的最新事实」（最新模型/版本/价格/政策），优先最近来源与官方发布页，陈旧内容只作标注日期的历史对比；
 - 基于检索结果明确：学完这个系列读者能独立完成什么（终点能力）；目标读者是谁；需要什么前置知识（一律按无设计）；哪些步骤不需要硬件/账号/付费就能完成；
 - 判断单系列还是拆子系列：读者群体差异过大时拆（例如「使用」与「开发」两类人该学的东西完全不同）。
 
@@ -51,7 +83,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 
 ### 第二步：规划系列
 
-生成「系列规划.md」。用 [assets/templates/series-plan-template.md](assets/templates/series-plan-template.md) 起步，规范见 [references/planning.md](references/planning.md)。规划文档必须包含：
+在 `generated/<英文标题>/` 内生成「系列规划.md」。用 [assets/templates/series-plan-template.md](assets/templates/series-plan-template.md) 起步，规范见 [references/planning.md](references/planning.md)。规划文档必须包含：
 
 - 读者定位、系列设计原则、写作规范；
 - 学习路径总览表：阶段 / 课 / 一句话目标 / 阅读时长 / 实践时长 / 适合人群；
@@ -61,7 +93,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 
 ### 第三步：建素材库
 
-创建「素材库.md」（模板见 [assets/templates/material-bank-template.md](assets/templates/material-bank-template.md)），把取材阶段的来源、链接、核验日期、截图、案例登记入库。每篇动笔前从库里取料，写完把新素材回填。
+在同目录创建「素材库.md」（模板见 [assets/templates/material-bank-template.md](assets/templates/material-bank-template.md)），把取材阶段的来源、链接、核验日期、截图、案例登记入库。每篇动笔前从库里取料，写完把新素材回填。
 
 ### 第四步：逐篇写作
 
@@ -70,6 +102,7 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 - 动笔前先按该课详案里的「素材清单」做一轮针对性 web search 补料，素材齐了才写；
 - 章节按文章类型匹配（不是固定套餐）：基础件是 frontmatter、标题+副标题、正文、参考、下一步；知识/介绍类只用这些，操作/教程类才加「本节难点/要点速记 → 动手任务 → 完成标志 → Q&A」，见 [references/article.md](references/article.md)；
 - 内容厚度：每篇正文 3500-8000 字（知识/介绍类按信息块骨架充实：案例、数据表、误区澄清、延伸阅读；厚度来自素材，不注水）；
+- 面向公众号/公开传播时，按 [references/viral-writing.md](references/viral-writing.md) 补传播基因：副标题钩子、前 100 字抓人、每 300 字停靠点、金句密度、结尾行动号召与互动话题；
 - 去 AI 味：场景化开场、一稿二改、直接说人话，不写总结句和套话。
 
 ### 第五步：验证与回填
@@ -86,57 +119,31 @@ description: 从零基础起步的系列教程（学习路径）或单篇文章�
 
 ### 第六步：转 HTML（每篇完成后执行）
 
-把文章转成微信兼容、带主题排版的 HTML（规范见 [references/publishing.md](references/publishing.md)）。以下命令默认在**本技能根目录（SKILL.md 所在文件夹）**执行，`--input` 传你自己的文章路径；换机器时无需改命令，只要先 `cd` 到本技能目录即可：
+执行前先读 [references/publishing.md](references/publishing.md)，按其中规范操作。命令默认在技能根目录（SKILL.md 所在文件夹）运行，`--input` 传文章路径（默认位于 `<项目根>/generated/<英文标题>/`，当前目录就是技能目录时可简写为 `generated/<英文标题>/01-...`）：
 
 ```powershell
-python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --dry-run
-python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refined-blue
+python scripts/md-to-html.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --dry-run
+python scripts/md-to-html.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --theme refined-blue
 ```
 
-- 主题选择：`--theme <slug>` 指定（themes/*.json 共 15 套）；未指定随机选一套；
-- 转 HTML 参数全部走命令行：`--theme` / `--html-dir`（缺省与 Markdown 同目录，便于 assets 图片相对路径解析；发布/更新草稿流程会显式使用 html/ 子目录）/ `--mermaid-cmd`（默认 mmdc），config.yaml 只管公众号发布；
-- Mermaid 必须渲染成 PNG（`--mermaid-cmd mmdc`）；找不到渲染命令时转 HTML 会保留源码占位并警告，发布会中止；
-- 转完检查：HTML 无 `{{...}}` 残留、无断图、正文图与封面引用完整（图片仍是本地相对路径，发布时上传替换）；
-- 状态自动回写：转 HTML 成功后，文章 frontmatter 的 `status` 会自动追加「已生成html」。
+要点：`--theme` 未指定时从 themes/（15 套）随机；Mermaid 必须渲染为 PNG（`--mermaid-cmd mmdc`）；HTML 默认输出到文章同目录、图片保持相对路径；转完无 `{{...}}` 残留、无断图；成功后 frontmatter `status` 自动追加「已生成html」。
 
 ### 第七步：发布到微信公众号（可选，按需执行）
 
-首次发布前复制 [config.yaml.example](config.yaml.example) 为 config.yaml（`Copy-Item config.yaml.example config.yaml`），填入自己的公众号 AppID/AppSecret——config.yaml 含密钥，已被 .gitignore 忽略、不入版本库；然后（同样在技能根目录执行）：
+执行前先读 [references/publishing.md](references/publishing.md)，按其中规范操作。首次使用复制 [config.yaml.example](config.yaml.example) 为 config.yaml 并填写凭据（config.yaml 含密钥、已被 .gitignore 忽略），随后在技能根目录运行：
 
 ```powershell
-python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
-python scripts/publish-wechat.py --input "01-数学竞赛是什么.md"
+python scripts/publish-wechat.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --dry-run
+python scripts/publish-wechat.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md"
 ```
 
-- 流程：获取 access_token → 上传正文图片（/media/uploadimg）→ 上传封面（thumb 素材）→ 创建草稿（/draft/add）；
-- 标题来源：草稿 `title` 默认取文章 frontmatter 的 `title`（可用 `--title` 覆盖），摘要默认取 frontmatter `subtitle`（可用 `--digest` 覆盖）；
-- 封面优先级：`--cover` > frontmatter `cover` > 文章第一张图；
-- 缺图守卫：正文图上传失败默认中止，`--allow-missing-images` 才继续；
-- 发布前必跑 `--dry-run` 核对账号、标题、图片清单；
-- 留言设置：`config.yaml` 的 `publish.need_open_comment`（默认 true，打开留言）与 `only_fans_can_comment`（默认 false，所有人可留言）会写入草稿接口，发布/更新草稿均生效；**「自动精选留言」微信没有公开 API**，只能到公众号后台人工开启（功能/互动 → 留言管理 → 自动精选），发布成功后脚本会打印提醒；
-- 状态自动回写：发布成功后，文章 frontmatter 自动追加 `status` 标记「已发布草稿」，并写入 `published_at` / `wechat_media_id` / `wechat_title` / `wechat_digest` / `wechat_images`；
-- 草稿详情（封面 media_id、图片 CDN 映射、文章路径等）自动存 `draft-records.json`，供更新草稿脚本使用；素材库不再手动回填发布信息；
-- **防重复发布**：记录中已存在同标题草稿时，发布会默认中止并提示改用更新脚本（确认要另建草稿才加 `--duplicate-ok`）；
-- **记录路径为相对路径**：`draft-records.json` 里文章/封面/图片路径均相对各记录的 `base_dir` 存储，换机器或移动目录时只需把 `base_dir` 改为新位置。
+要点：
 
-**更新/修复已发布的草稿**：
-
-```powershell
-# 列出已发布草稿记录
-python scripts/update-wechat-draft.py --list
-
-# 按标题关键词定位并更新（复用记录里的图片 CDN URL，重读文章 HTML）
-python scripts/update-wechat-draft.py --key "别急着入坑"
-
-# 按 media_id 更新，指定新标题/摘要或换封面
-python scripts/update-wechat-draft.py --media-id <id> --title "新标题" --digest "新摘要" --cover assets/cover-03.png
-```
-
-- `--key` 匹配到多条草稿记录时会列出全部并要求用 `--media-id` 精确定位，避免更新错草稿；
-- 正文图片优先复用发布时记录的 CDN URL（不重复上传）；文章改动后新增的本地图才会重新上传；
-- 更新前若没有记录，脚本会拉取草稿现有内容并把 `\uXXXX` 乱码解码后重写（修复发布乱码场景）；
-- 微信 `draft/update` 必须携带 `thumb_media_id`，脚本会自动复用原封面；
-- 请求一律以 UTF-8 中文原文发送（`ensure_ascii=False`），避免微信把 `\uXXXX` 转义当字面文本存储。
+- 发布前必跑 `--dry-run`；**正式调用发布 API 必须先得到用户确认**（见收尾执行约定）；
+- 标题/摘要默认取 frontmatter `title`/`subtitle`（可用 `--title`/`--digest` 覆盖）；封面优先级 `--cover` > frontmatter `cover` > 文章第一张图；
+- 缺图默认中止（`--allow-missing-images` 可继续）；同标题草稿默认防重复发布；
+- 发布/更新草稿信息自动写入 `draft-records.json`，frontmatter 自动回写状态与发布字段，素材库不再手动维护发布表；
+- 更新已发布草稿用 `python scripts/update-wechat-draft.py --list / --key <关键词> / --media-id <id>`；请求一律 UTF-8 原文发送，防 `\uXXXX` 乱码。
 
 ## 十条设计原则（每课、每篇都要对照）
 
@@ -148,40 +155,34 @@ python scripts/update-wechat-draft.py --media-id <id> --title "新标题" --dige
 6. 难度递进、一次只学一个新概念；
 7. 官方/权威资料优先，系列是路线图不是参考书；
 8. 去 AI 味：场景开场、一稿二改、说人话；
-9. 双源核实、禁止编造；
+9. 双源核实、时效最新（写作日快照）、禁止编造；
 10. 写后回填：进度表、合集、素材库同步更新。
 
 ## 配图方案
 
-**配图强制（2026-09-03 起）**：每篇必须有封面 1 张，且正文每个一级小节（## 标题）至少 1 张非封面配图（同一张图不跨小节复用；「本节难点/要点速记/动手任务/完成标志/常见问题 Q&A/参考/下一步/延伸阅读/配图登记」等辅助或收尾小节不计）。系列封面、章节头图这类「批量但统一」的图，推荐用**模板化配图**：HTML/CSS 模板 + 无头浏览器截图，把标题、分类、标签自动渲染成统一风格的图——零生成成本、品牌一致、完全可控。这是**通用 HTML→PNG 引擎**（[scripts/cover-generator/generate.mjs](scripts/cover-generator/generate.mjs)）：封面用 `--style`，文章里的知识卡/示意图等正文配图用 `--template` + `--set` 任意占位符。Obsidian 里可配合 Templater 在新笔记创建时自动出图。封面生成支持 `--input` 直接传文章 .md：标题/副标题/期号/分类/系列/风格缺省取文章 frontmatter（命令行显式参数优先），保证封面 title 与文章 header 的 `title` 一致，无需手动抄标题。
+**配图强制**：每篇必须有封面 1 张，且正文每个一级小节（## 标题）至少 1 张非封面配图（同一张图不跨小节复用；「本节难点/要点速记/动手任务/完成标志/常见问题 Q&A/参考/下一步/延伸阅读/行动号召/配图登记」等辅助或收尾小节不计）。缺封面、缺正文图或缺任一正文小节的图都视为未完成，发布前运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图、0 缺小节图。
 
-所有配图按统一目录存放（封面 `assets/cover-NN.png`、每课正文图 `assets/NN/` 一课一目录），正文引用与文件一一对应。**每篇文章必须同时有封面图，且正文每个一级小节至少一张非封面配图；缺封面、缺正文图或缺任一正文小节的图都视为未完成**——发布前运行 [scripts/check-images.mjs](scripts/check-images.mjs) 验证 0 断链、0 未用图、0 缺封面、0 缺正文图、0 缺小节图。正文配图可用内置 figures 模板（card-flow / card-list / card-compare / card-knowledge）生成。方案、脚本、存放与锚点规范见 [references/images.md](references/images.md) 与 [scripts/cover-generator/](scripts/cover-generator/)。
-
-**公众号封面尺寸（硬性）**：微信头条封面按 2.35:1 裁切（上传建议 1068×455，展示 900×383）。作为公众号发布用途的封面必须按 2.35:1 生成（`generate.mjs --width 1068 --height 455`），否则微信会裁掉左右边缘、文字可能被截；`publish-wechat.py` 发布前会检查封面宽高比，偏离 2.35:1 会警告或中止。1200×630 仅用于知识库头图与正文图，不能直接当公众号封面上传。详见 [references/images.md](references/images.md) 的「封面尺寸」一节。
-
-封面生成支持**模板风格随机/路由**：`templates/manifest.json` 定义 33 个模板（default + 32 套风格，与 web-image 一一对应）。用户指定 `--style` 就按指定风格；**未指定时默认随机**——脚本从 33 套风格里随机选一套（`--random`，不传也默认随机），篇与篇不强求统一；`--auto` 可显式启用关键词自动路由。**硬性约定：同一篇文章的封面与正文图必须同一 `--style`**，建议把该篇随机到的 slug 记入 frontmatter `style` 字段，正文卡沿用同一 slug；figures 正文卡通过 `{{PALETTE_*}}` 自动继承该风格配色，保证一篇文章内风格一致。
-
-32 套风格已全部内置为模板（[scripts/cover-generator/templates/](scripts/cover-generator/templates/)，清单见 manifest.json），skill 自包含、无外部依赖，离线可用。
-
-## 发布（可选）
-
-如需转 HTML 或发布到微信公众号，按「第六步：转 HTML」和「第七步：发布到微信公众号」执行，规范见 [references/publishing.md](references/publishing.md)。
+- **引擎**：优先用模板化配图 [scripts/cover-generator/generate.mjs](scripts/cover-generator/generate.mjs)（HTML→PNG，default + 32 套风格共 33 个模板，离线可用）；封面用 `--style`，正文知识卡用 `--template`（card-flow / card-list / card-compare / card-knowledge）；支持 `--input` 直接读文章 frontmatter 出封面；
+- **存放**：封面 `assets/cover-NN.png`、正文图 `assets/NN/` 一课一目录，正文引用与文件一一对应；
+- **风格与来源可混用**：同一篇文章里，模板化配图（封面 + 正文知识卡）内部保持同一 `--style`（slug 记入 frontmatter `style`），保证骨架统一；实拍截图、Mermaid、AI 生图等非模板来源可与模板卡混用，不强制套模板配色，但避免全篇视觉打架（AI 生图建议提示词参考主风格）。按内容选最省力的来源：能截图的用截图、流程拆解用 Mermaid、知识对比用模板卡、需要氛围再考虑 AI 生图；
+- **公众号封面尺寸**：必须 2.35:1（建议 1068×455，展示 900×383）；1200×630 仅用于知识库头图/正文图；
+- 完整方案、脚本用法与检查清单见 [references/images.md](references/images.md)。
 
 ## 文件说明
 
 | 文件 | 用途 | 何时读 |
 | --- | --- | --- |
 | [references/planning.md](references/planning.md) | 规划文档规范与检查清单 | 第二步规划系列时 |
-| [references/article.md](references/article.md) | 单篇写作规范与检查清单 | 第四步写每篇时 |
-| [references/images.md](references/images.md) | 配图方案（模板化配图/Sharp/Mermaid/实拍 + 存放与锚点规范） | 需要配图时 |
-| [references/publishing.md](references/publishing.md) | 公众号发布适配 | 需要发布时 |
+| [references/article.md](references/article.md) | 文章写作规范与检查清单（系列与单篇共享） | 第四步写每篇时 |
+| [references/viral-writing.md](references/viral-writing.md) | 爆款流量密码（标题钩子、开头、结构节奏、金句、行动号召、语气） | 面向公众号/公开传播的文章成稿前 |
+| [references/images.md](references/images.md) | 配图方案（模板/Mermaid/截图/AI 生图来源混用 + 模板风格统一与存放锚点规范） | 需要配图时 |
+| [references/publishing.md](references/publishing.md) | 转 HTML 与公众号发布/更新草稿规范 | 需要发布时 |
 | [config.yaml.example](config.yaml.example) / [config.yaml](config.yaml) | 发布配置（公众号凭据、缺图策略；转 HTML 参数走命令行）。example 是模板，复制为 config.yaml 后填写凭据；config.yaml 不入库 | 首次发布前复制并填写 |
 | [scripts/md-to-html.py](scripts/md-to-html.py) | md → 微信兼容 HTML（主题指定/随机、mermaid 处理） | 每篇写完转 HTML 时 |
 | [scripts/publish-wechat.py](scripts/publish-wechat.py) | 发布到微信公众号草稿箱（config.yaml 驱动，支持 --dry-run） | 需要发布时 |
 | [scripts/update-wechat-draft.py](scripts/update-wechat-draft.py) | 更新/修复已发布草稿（按记录定位、复用图片 URL、UTF-8 发送） | 需要更新草稿时 |
-| [draft-records.example.json](draft-records.example.json) / [draft-records.json](draft-records.json) | 草稿记录（media_id、标题、摘要、封面、图片映射、相对 base_dir 的文章路径），发布后自动写入；同标题重复发布会被拦截。example 是空模板；真实记录含本机路径，不入库（.gitignore），由脚本自动创建 | 更新草稿时 |
-| [assets/templates/](assets/templates/) | 三个可直接复制的模板 | 建规划、素材库、写文章时 |
+| [draft-records.json](draft-records.json) | 草稿记录（media_id、标题、摘要、封面、图片映射、相对 base_dir 的文章路径），发布后自动写入；同标题重复发布会被拦截。含本机路径，不入库（.gitignore），由脚本自动创建（缺失即视为空列表） | 更新草稿时 |
+| [assets/templates/](assets/templates/) | 四个可直接复制的模板：系列规划 / 素材库 / 系列文章 / 单篇文章 | 建规划、素材库、写文章时 |
 | [scripts/cover-generator/](scripts/cover-generator/) | 封面生成脚本、HTML 模板与 Templater 示例 | 需要批量生成封面时 |
 | [scripts/check-images.mjs](scripts/check-images.mjs) | 配图一一对应核对脚本（断链/未用图/缺封面/缺正文图/缺小节图） | 发布前核对配图时 |
 | [scripts/check-articles.mjs](scripts/check-articles.mjs) | 内容厚度核对脚本（正文 3500-8000 字） | 发布前核对内容厚度时 |
-

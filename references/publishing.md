@@ -2,6 +2,8 @@
 
 系列文章在 Obsidian 里写完后，按「第六步：转 HTML → 第七步：发布微信（可选）」走。本文是这两步的规范。
 
+文章默认位于 `<项目根>/generated/<英文标题>/`（SKILL.md「输出目录约定」）；下文命令示例里的路径按实际位置替换，命令默认在技能根目录执行。
+
 ## 一、转 HTML（每篇必做）
 
 ### 命令
@@ -10,13 +12,13 @@
 
 ```powershell
 # 先干跑：看会用什么主题、输出到哪
-python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --dry-run
+python scripts/md-to-html.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --dry-run
 
-# 正式转换（主题未指定时按 config → 随机）
-python scripts/md-to-html.py --input "01-数学竞赛是什么.md"
+# 正式转换（未指定主题 → 随机）
+python scripts/md-to-html.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md"
 
 # 指定主题（可选参数：--html-dir 输出目录，--mermaid-cmd 渲染命令）
-python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refined-blue --mermaid-cmd mmdc
+python scripts/md-to-html.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --theme refined-blue --mermaid-cmd mmdc
 ```
 
 ### 主题选择规则
@@ -73,10 +75,10 @@ publish:
 
 ```powershell
 # 干跑：不调微信 API，核对账号/标题/图片清单
-python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
+python scripts/publish-wechat.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --dry-run
 
 # 正式发布到草稿箱
-python scripts/publish-wechat.py --input "01-数学竞赛是什么.md"
+python scripts/publish-wechat.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md"
 ```
 
 可选参数：`--theme`（HTML 主题，缺省随机）、`--html-dir` / `--mermaid-cmd`（透传给 md→HTML）、`--title` / `--digest`（覆盖提取值）、`--cover`（封面，优先级最高）、`--account`（多账号）、`--allow-missing-images`（覆盖 config）。
@@ -128,10 +130,10 @@ python scripts/update-wechat-draft.py --media-id <media_id>
 
 ```powershell
 # 用文章 Markdown 重新生成 HTML（改动正文后）
-python scripts/update-wechat-draft.py --key "03" --input "03-别急着入坑.md" --theme refined-blue
+python scripts/update-wechat-draft.py --key "03" --input "<项目根>/generated/<英文标题>/03-别急着入坑.md" --theme refined-blue
 
 # 直接指定 HTML 文件，并覆盖标题/摘要
-python scripts/update-wechat-draft.py --media-id <id> --html html/03-别急着入坑.html --title "新标题" --digest "新摘要"
+python scripts/update-wechat-draft.py --media-id <id> --html "<项目根>/generated/<英文标题>/html/03-别急着入坑.html" --title "新标题" --digest "新摘要"
 
 # 换封面（重新上传为 thumb 素材）
 python scripts/update-wechat-draft.py --key "03" --cover assets/cover-03.png
@@ -156,4 +158,4 @@ python scripts/update-wechat-draft.py --key "03" --cover assets/cover-03.png
 - [ ] 每张表过手机安全判据
 - [ ] 封面已指定（--cover / frontmatter cover / 第一张图）
 - [ ] 截图无隐私信息，链接逐一打开有效
-- [ ] 发布成功后 media_id/URL 回填素材库
+- [ ] 发布成功后确认 frontmatter 状态与 draft-records.json 已自动回写（素材库不再手动维护发布表）

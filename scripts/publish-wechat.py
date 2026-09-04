@@ -182,7 +182,7 @@ def extract_local_images(md_text, base_dir):
     """从 md 提取本地图片路径（去重、保留顺序、排除 http）。"""
     seen, result = set(), []
     for m in _IMG_RE.finditer(md_text):
-        src = m.group(2).strip()
+        src = m.group(1).strip()
         if src.startswith(("http://", "https://", "data:")):
             continue
         p = Path(src)

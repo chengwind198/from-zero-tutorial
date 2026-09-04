@@ -56,17 +56,19 @@
 7. **一键转成微信公众号文章**（排版适配、封面比例自动切、Mermaid 图表转图片）；
 8. **甚至帮你发布到公众号草稿箱**（防重复发布，图片自动上传复用）。
 
-只想写一篇独立文章/公众号文章？直接给标题即可（如「写一篇对比 Claude Code 和 Codex 的文章」），技能自动走**单篇模式**：取材核实 → 简短大纲 → 成文 → 封面 + 每个正文小节配图 → 校验 → 转 HTML →（可选）发布；不建系列规划/素材库，正文也不写「下一步」。
+只想写一篇独立文章/公众号文章？直接给标题即可（如「写一篇对比 Claude Code 和 Codex 的文章」），技能自动走**单篇模式**：要素确认（主题/目标读者/核心观点）→ 取材核实 → 大纲 + 3 个标题候选即写即报 → 直接成文 → 封面 + 每个正文小节配图 → 校验 → 转 HTML →（可选）发布（全程自动推进，不在大纲处停等确认）；产出统一放在项目根目录 `generated/<英文标题>/`，不建系列规划/素材库（可用轻量「素材.md」留档取材），正文也不写「下一步」。面向公众号传播时自动套用爆款写作规范（标题钩子、前 100 字、金句、行动号召）。
 
 全程你只需要说「开始」，中间可以随时提修改意见，其他机械活儿 AI 全干。
 
 ## 2. 它解决什么问题
 
-系列教程常见的坑：想到哪写到哪、默认读者有前置知识、只讲不练、数据编造、写完没人校验。本技能用一条强制流程把这些堵住：**取材先行 → 双源核实 → 规划路径 → 逐篇写作 → 动手验证 → 转 HTML →（可选）发布微信公众号草稿**。 技能会自动路由：系列请求走七步流程，单篇请求走五步流程（见 [SKILL.md](SKILL.md)）。
+系列教程常见的坑：想到哪写到哪、默认读者有前置知识、只讲不练、数据编造、写完没人校验。本技能用一条强制流程把这些堵住：**取材先行 → 双源核实 → 规划路径 → 逐篇写作 → 动手验证 → 转 HTML →（可选）发布微信公众号草稿**。 技能会自动路由：系列请求走七步流程，单篇请求走六步流程（见 [SKILL.md](SKILL.md)）。
 
 ## 3. 核心特性
 
-- 双模式路由：系列模式七步（取材分析 → 系列规划 → 素材库 → 逐篇写作 → 验证回填 → 转 HTML → 发布微信）；单篇模式五步（取材 → 大纲 → 写作 → 封面 + 每个正文小节配图 → 校验与收尾）；
+- 双模式路由：系列模式七步（取材分析 → 系列规划 → 素材库 → 逐篇写作 → 验证回填 → 转 HTML → 发布微信）；单篇模式六步（要素确认 → 取材 → 大纲 + 3 个标题候选即写即报 → 写作 → 配图 → 校验与收尾）；
+- 统一输出目录：写作产出（规划、素材库、文章、图片、HTML）一律放项目根目录 `generated/<英文标题>/`，英文 slug 全小写、连字符分隔；
+- 爆款流量密码：面向公众号/公开传播的文章套用传播写作规范（悬念/数字/情绪标题钩子、前 100 字开场、SCQA/黄金圈结构、每 300 字停靠点、每 500 字金句、结尾行动号召与互动话题），且不突破取材先行、双源核实、禁止编造的底线；
 - 配图强制（2026-09-03 起）：封面 1 张 + 正文每个一级小节至少 1 张非封面配图，系列/单篇同规则；
 - 十条设计原则：无门槛可学、每课有完成标志、术语首现一句话解释、官方资料优先、禁止编造案例与数据；
 - 配图引擎：[scripts/cover-generator/](scripts/cover-generator/)，33 套风格的模板化封面/正文卡（HTML→PNG，Playwright 或本机 Edge/Chrome）；
@@ -76,13 +78,13 @@
 
 ## 4. 配图方案（零成本优先）
 
-系列/单篇文章必须配图（封面 1 张 + 正文每个一级小节至少 1 张正文图，2026-09-03 起强制），本技能默认走**零 token、零费用**的本地生成通道：
+系列/单篇文章必须配图（封面 1 张 + 正文每个一级小节至少 1 张正文图，2026-09-03 起强制），本技能默认走**零 token、零费用**的本地生成通道，且模板化配图、Mermaid、实拍截图、AI 生图可在同一篇内**按内容混用**（模板卡统一主视觉，其余来源补充）：
 
 ### 4.1 模板化配图（推荐）
 
 HTML/CSS 模板 + 无头浏览器截图：把标题、副标题、分类、期号填入模板，自动渲染成统一风格的 PNG。零生成成本、品牌一致、完全可控。
 
-- 33 套风格（default + 32 套，清单见 templates/manifest.json），未指定时默认随机，同一篇文章内风格保持一致；
+- 33 套风格（default + 32 套，清单见 templates/manifest.json），未指定时默认随机；同一篇文章的封面与模板卡共用同一 style（主视觉统一），Mermaid / 截图 / AI 生图可与模板混用；
 - 封面 `assets/cover-NN.png`，正文图 `assets/NN/` 一课一目录；
 - 内置正文卡模板：card-flow（流程卡）、card-list（列表卡）、card-compare（对比卡）、card-knowledge（知识点卡）；
 - 公众号封面必须按 2.35:1 生成（`--width 1068 --height 455`），发布脚本会校验比例。
@@ -166,7 +168,7 @@ git clone --depth 1 https://github.com/chengwind198/from-zero-tutorial.git ~/.cl
 
 ### 7.2 执行流程
 
-触发后技能按请求自动路由：**系列模式**执行 web search 取材 → 系列规划 → 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需）；**单篇模式**执行取材 → 大纲 → 写作 → 封面 + 每个正文小节配图 → 校验收尾 → 转 HTML（发布按需）。全程无需手动分步；关键数据会做双源核实，案例与数据禁止编造。
+触发后技能按请求自动路由：**系列模式**执行要素确认 → web search 取材 → 系列规划（要点版即写即报）→ 素材库 → 逐篇写作 → 配图与校验 → 转 HTML（发布按需）；**单篇模式**执行要素确认 → 取材 → 大纲 + 3 个标题候选即写即报 → 写作 → 封面 + 每个正文小节配图 → 校验收尾 → 转 HTML（发布按需）。产出统一放入项目根目录 `generated/<英文标题>/`；大纲与候选同步给出后一次跑完，不中途分批发文件。关键数据会做双源核实（时效敏感主题以写作日最新信息为准并标注日期），案例与数据禁止编造。
 
 ## 8. 快速开始
 
@@ -189,44 +191,44 @@ Copy-Item config.yaml.example config.yaml
 #### 8.3.1 转 HTML
 
 ```powershell
-python scripts/md-to-html.py --input "01-数学竞赛是什么.md" --theme refined-blue
+python scripts/md-to-html.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --theme refined-blue
 ```
 
 HTML 默认输出到 Markdown 同目录（`<文章目录>/<文章名>.html`），图片保持相对 `assets/` 路径，直接打开不破图；需要子目录时用 `--html-dir html`（发布/更新草稿流程内部会显式使用 `html/` 子目录）。
 
 #### 8.3.2 配图与内容校验
 
-在系列目录运行：
+在系列目录运行（文章默认在项目根目录 `generated/<英文标题>/`，`--root` 指向该目录；脚本在技能根目录运行）：
 
 ```powershell
-node scripts/check-images.mjs --root "你的系列目录"
-node scripts/check-articles.mjs --root "你的系列目录"
+node scripts/check-images.mjs --root "<项目根>/generated/<英文标题>"
+node scripts/check-articles.mjs --root "<项目根>/generated/<英文标题>"
 ```
 
-单篇/独立文章请加 `--strict`，会强制封面、正文每节一图与字数区间：`node scripts/check-images.mjs --root "你的单篇文章目录" --strict`、`node scripts/check-articles.mjs --root "你的单篇文章目录" --strict`（示例见 references/single-mode.md）。
+单篇/独立文章请加 `--strict`，会强制封面、正文每节一图与字数区间：`node scripts/check-images.mjs --root "<项目根>/generated/<英文标题>" --strict`、`node scripts/check-articles.mjs --root "<项目根>/generated/<英文标题>" --strict`（示例见 references/single-mode.md）。
 
 #### 8.3.3 发布到公众号草稿箱
 
 先干跑核对账号/标题/图片：
 
 ```powershell
-python scripts/publish-wechat.py --input "01-数学竞赛是什么.md" --dry-run
+python scripts/publish-wechat.py --input "<项目根>/generated/<英文标题>/01-数学竞赛是什么.md" --dry-run
 ```
 
-完整用法见 [SKILL.md](SKILL.md)（技能主文档：铁律、七步流程、设计原则）与 [references/](references/)（规划 / 单篇写作 / 配图 / 发布规范）。
+完整用法见 [SKILL.md](SKILL.md)（技能主文档：铁律、七步流程、输出目录、设计原则）与 [references/](references/)（规划 / 单篇写作 / 配图 / 发布 / 爆款流量密码规范）。
 
 ## 9. 目录结构
 
 | 路径 | 说明 |
 | --- | --- |
 | [SKILL.md](SKILL.md) | 技能主文档 |
-| [references/](references/) | 规划、单篇写作、配图、发布的详细规范 |
+| [references/](references/) | 规划、单篇写作、配图、发布、爆款流量密码的详细规范 |
 | [assets/templates/](assets/templates/) | 系列规划、素材库、系列文章模板、单篇文章模板（article-single-template，无 lesson） |
 | [scripts/](scripts/) | md→HTML、微信发布/更新、配图与内容校验脚本 |
 | [scripts/cover-generator/](scripts/cover-generator/) | 模板化配图引擎（33 套风格 + 正文卡模板） |
 | [themes/](themes/) | 15 套微信 HTML 主题 |
 | [config.yaml.example](config.yaml.example) | 发布配置模板（真实配置 `config.yaml` 不入库） |
-| [draft-records.example.json](draft-records.example.json) | 草稿记录空模板（真实记录由脚本自动创建，不入库） |
+| generated/<英文标题>/ | 运行期生成的系列/单篇写作产出：系列规划、素材库、文章、assets/、html/（英文 slug 全小写、连字符分隔） |
 
 ## 10. 隐私与安全
 
